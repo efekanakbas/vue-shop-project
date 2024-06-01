@@ -34,10 +34,12 @@ onMounted(() => {
   svg.style.width = width + 'px'
   svg.style.height = height + 'px'
 
+  //@ts-expect-error
   const points = []
   for (let i = opts.numberOfPoints; i--; ) points.push(i)
 
   const animate = () => {
+    //@ts-expect-error
     const coords = points.map((n) => {
       const first = n == 0
       const last = n == opts.numberOfPoints - 1
@@ -51,6 +53,7 @@ onMounted(() => {
     const path = svg.querySelector('path')
     if (path) {
       path.setAttribute('d', 'M' + coords.map((coord) => coord.x + ',' + coord.y).join(' L'))
+      //@ts-expect-error
       path.style.opacity = (Math.random() * (5 - 2) + 2) / 5 + 0.2
       path.style.strokeWidth = opts.lineWidth.toString()
     }

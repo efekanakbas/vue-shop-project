@@ -107,6 +107,15 @@ const router = createRouter({
       meta: {
         layout: RestLayout
       }
+    },
+    {
+      path: '/product/:id',
+      name: 'product',
+      component: () => import('@/views/Product.vue'),
+      props: true,
+      meta: {
+        layout: RestLayout
+      }
     }
   ]
 })

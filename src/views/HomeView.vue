@@ -23,6 +23,7 @@ import { useResizeObserver } from '@vueuse/core'
 import { useDarkStore } from '@/stores/dark'
 import { useMediaQuery } from '@vueuse/core'
 import ElectricityBeam from '@/components/ElectricityBeam.vue'
+import { useCounterStore } from '@/stores/counter'
 //~
 
 //! Reactivity
@@ -157,11 +158,18 @@ onUnmounted(() => {
 
 <template>
   <template v-if="isLoading">
-    <ul class="flex gap-2 flex-wrap">
-      <li v-for="item in Array(20).fill(0)" :key="item.id">
-        <Skeleton class="w-[200px] h-[200px]" />
-      </li>
-    </ul>
+    <div class="h-[200vh] space-y-5 flex flex-col items-center justify-start">
+      <Skeleton class="rounded-lg w-[140px] h-10" />
+      <Skeleton class="rounded-lg mx-auto max-w-[calc(100vw-40px)] lg:w-full h-[500px]" />
+      <Skeleton class="rounded-lg w-[324px] h-[62px]" />
+      <div class="flex flex-row gap-5 justify-center items-center w-full basis-3">
+        <Skeleton
+          v-for="(item, index) in Array(3).fill(0)"
+          :key="index"
+          class="rounded-lg h-[483.66px] w-full flex-wrap"
+        />
+      </div>
+    </div>
   </template>
   <template v-else-if="isFetching">
     <div>Loading...</div>
@@ -169,7 +177,9 @@ onUnmounted(() => {
   <template v-else>
     <div class="w-full flex flex-col space-y-5">
       <div class="flex justify-center">
-        <h1 class="text-[20px] bg-white dark:bg-black dark:text-white px-6 py-2 rounded-lg">
+        <h1
+          class="text-[20px] bg-white dark:bg-black dark:text-white w-[140px] h-[40px] flex justify-center items-center rounded-lg"
+        >
           Clothings!
         </h1>
       </div>

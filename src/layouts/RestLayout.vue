@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed, onMounted, ref, watch, provide } from 'vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { Icon } from '@iconify/vue'
 import { Button } from '@/components/ui/button'
@@ -28,11 +29,15 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
+
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { useCounterStore } from '@/stores/counter'
 import { useAuthStore } from '@/stores/auth'
 import { useDarkStore } from '@/stores/dark'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import CartItem from '@/components/CartItem.vue'
+import { type UseDraggableReturn, VueDraggable } from 'vue-draggable-plus'
 
 const isDark = useDark({
   selector: 'body',
@@ -54,10 +59,94 @@ const handleLogout = () => {
     authStore.handleAuth()
   }, 100)
 }
+
+const handleBuy = () => {
+  window.alert('Congratulations! You made a purchase.')
+}
+
+const el = ref<UseDraggableReturn>()
+
+const onStart = () => {
+  console.log('start')
+}
+
+const onUpdate = () => {
+  console.log('update')
+}
 </script>
 
 <template>
   <div class="flex flex-col space-y-[64px] items-center w-full overflow-x-hidden overflow-y-auto">
+    <Teleport to="html">
+      <Sheet>
+        <SheetTrigger as-child>
+          <button
+            v-motion-slide-right
+            v-if="store.count !== 0"
+            class="bg-orange-600/40 lg:bg-orange-600/70 p-2 pl-3 lg:p-3 lg:pl-4 rounded-l-full text-white fixed right-0 top-[49%]"
+          >
+            <ShoppingCart />
+          </button>
+        </SheetTrigger>
+        <SheetContent :overlay-value="true" side="right">
+          <SheetHeader>
+            <SheetTitle class="flex justify-center">
+              <RouterLink to="/"
+                ><h1 class="text-rainbow-animation text-stroke-1-black dark:text-stroke-1-white">
+                  SHOPPY
+                </h1></RouterLink
+              ></SheetTitle
+            >
+            <SheetDescription class="dark:text-white flex justify-center">
+              You can buy anything you want!
+            </SheetDescription>
+          </SheetHeader>
+          <Separator class="my-6" />
+          <h1 class="font-bold mb-6 text-[32px]">Your Cart</h1>
+          <ScrollArea style="height: calc(100% - 320px)" class="bg-slate-100 rounded-md">
+            <ul class="flex flex-col text-gray-600 dark:text-white text-[24px] space-y-2 p-2">
+              <VueDraggable
+                ref="el"
+                v-model="store.cart"
+                :animation="150"
+                ghostClass="ghost"
+                class="flex flex-col gap-2 p-4 w-300px h-300px m-auto rounded"
+                @start="onStart"
+                @update="onUpdate"
+              >
+                <li
+                  class="cursor-move bg-white rounded-lg"
+                  v-for="item in store.cart"
+                  :key="
+                    //@ts-ignore
+                    item.id
+                  "
+                >
+                  <CartItem :item="item" />
+                </li>
+              </VueDraggable>
+            </ul>
+          </ScrollArea>
+          <Card
+            @click="handleBuy"
+            role="button"
+            class="flex justify-center mt-7 text-[32px] bg-orange-100 rounded-lg text-orange-500 items-center space-x-6 group cursor-pointer"
+          >
+            <p>{{ parseFloat(store.total.toFixed(2)) }}</p>
+            <ShoppingCart
+              class="group-hover:translate-x-20 transition-transform duration-500"
+              :size="32"
+            />
+          </Card>
+          <SheetFooter class="absolute bottom-6 w-full px-6 left-0">
+            <SheetClose as-child>
+              <Button type="button" class="mx-auto"> Close </Button>
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+    </Teleport>
+
     <header class="fixed w-full h-[64px] bg-slate-300 dark:bg-slate-900 z-50">
       <nav class="container flex items-center h-full justify-between">
         <Sheet>
@@ -66,14 +155,14 @@ const handleLogout = () => {
           </SheetTrigger>
           <SheetContent side="left">
             <SheetHeader>
-              <SheetTitle>
+              <SheetTitle class="flex justify-center">
                 <RouterLink to="/"
                   ><h1 class="text-rainbow-animation text-stroke-1-black dark:text-stroke-1-white">
                     SHOPPY
                   </h1></RouterLink
                 ></SheetTitle
               >
-              <SheetDescription class="dark:text-white">
+              <SheetDescription class="dark:text-white flex justify-center">
                 You can buy anything you want!
               </SheetDescription>
             </SheetHeader>
@@ -91,7 +180,7 @@ const handleLogout = () => {
             </div>
             <SheetFooter class="absolute bottom-6 w-full px-6 left-0">
               <SheetClose as-child>
-                <Button type="button"> Close </Button>
+                <Button type="button" class="mx-auto"> Close </Button>
               </SheetClose>
             </SheetFooter>
           </SheetContent>
@@ -192,6 +281,11 @@ const handleLogout = () => {
 </template>
 
 <style>
+.ghost {
+  opacity: 0.5;
+  background: rgb(254 215 170);
+}
+
 .text-rainbow-animation {
   font-family: arial black;
   font-size: 32px;

@@ -25,6 +25,11 @@ import { Input } from '@/components/ui/input'
 import { useCounterStore } from '@/stores/counter'
 import { useAuthStore } from '@/stores/auth'
 import LoginView from '@/views/auth/LoginView.vue'
+import { ShoppingCart } from 'lucide-vue-next'
+
+const props = defineProps<{
+  handlerAddToCart?: () => void
+}>()
 
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate()
@@ -33,11 +38,10 @@ const isDesktop = useMediaQuery('(min-width: 1024px)')
 const isOpen = ref(false)
 const store = useCounterStore()
 const authStore = useAuthStore()
-console.log('isLogged', typeof authStore.isLogged)
 
 const handleIncrement = () => {
-  if (authStore.isLogged) {
-    store.increment()
+  if (authStore.isLogged && props.handlerAddToCart) {
+    props.handlerAddToCart()
   } else {
     console.log('deneme')
   }
@@ -51,7 +55,10 @@ const handleClose = () => {
 <template>
   <template v-if="authStore.isLogged">
     <div>
-      <Button @click="handleIncrement">Arttır</Button>
+      <Button @click="handleIncrement" class="flex gap-4">
+        <figure><ShoppingCart /></figure>
+        Add to cart
+      </Button>
     </div>
   </template>
 
@@ -62,7 +69,10 @@ const handleClose = () => {
 
     <Dialog v-if="isDesktop" v-model:open="isOpen">
       <DialogTrigger as-child>
-        <Button @click="handleIncrement">Arttır</Button>
+        <Button @click="handleIncrement" class="flex gap-4">
+          <figure><ShoppingCart /></figure>
+          Add to cart
+        </Button>
       </DialogTrigger>
       <DialogContent class="sm:max-w-[425px] bg-red-100 p-0 w-full">
         <GridForm />
@@ -71,7 +81,10 @@ const handleClose = () => {
 
     <Drawer v-else v-model:open="isOpen">
       <DrawerTrigger as-child>
-        <Button @click="handleIncrement">Arttır</Button>
+        <Button @click="handleIncrement" class="flex gap-4">
+          <figure><ShoppingCart /></figure>
+          Add to cart
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <GridForm />
