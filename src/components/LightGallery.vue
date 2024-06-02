@@ -118,7 +118,6 @@ onMounted(() => {
     "
     class="d-flex justify-content-center select-none"
   >
-    {{ isWrapClicked }}
     <div id="inline-gallery-container" class="inline-gallery-container"></div>
   </div>
 </template>
