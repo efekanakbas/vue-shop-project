@@ -130,12 +130,22 @@ onUnmounted(() => {
 <template>
   <template v-if="menError || womenError || jeweleryError || electronicsError"> ERROR! </template>
   <template v-else-if="menLoading || womenLoading || jeweleryLoading || electronicsLoading">
-    <div class="h-[200vh] w-full space-y-5 flex flex-col items-center justify-start">
-      <Skeleton class="rounded-lg w-[140px] h-10" />
+    <div class="h-full w-full space-y-7 flex flex-col items-center justify-start">
+      <Skeleton class="rounded-lg w-[140px] h-[40px]" />
       <Skeleton class="rounded-lg mx-auto w-[calc(100vw-40px)] lg:w-full h-[500px]" />
-      <Skeleton class="rounded-lg w-[324px] h-[62px]" />
+      <Skeleton class="rounded-lg w-[324px] h-[66px]" />
       <div
-        class="flex flex-col w-[calc(100vw-150px)] lg-w-full lg:flex-row gap-5 justify-center items-center basis-3"
+        class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-5 justify-center items-center basis-3"
+      >
+        <Skeleton
+          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(2).fill(0)"
+          :key="index"
+          class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
+        />
+      </div>
+      <Skeleton class="rounded-lg w-[128.14px] h-[46px]" />
+      <div
+        class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-5 justify-center items-center basis-3"
       >
         <Skeleton
           v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(2).fill(0)"
@@ -146,12 +156,21 @@ onUnmounted(() => {
     </div>
   </template>
   <template v-else-if="menFetching || womenFetching || jeweleryFetching || electronicsFetching">
-    <div class="h-[200vh] w-full space-y-5 flex flex-col items-center justify-start">
+    <div class="h-[300vh] w-full space-y-7 flex flex-col items-center justify-start">
       <Skeleton class="rounded-lg w-[140px] h-10" />
       <Skeleton class="rounded-lg mx-auto w-[calc(100vw-40px)] lg:w-full h-[500px]" />
       <Skeleton class="rounded-lg w-[324px] h-[62px]" />
       <div
-        class="flex flex-col w-[calc(100vw-150px)] lg-w-full lg:flex-row gap-5 justify-center items-center basis-3"
+        class="flex flex-col w-[calc(100vw-150px)] lg:w-full lg:flex-row gap-5 justify-center items-center basis-3"
+      >
+        <Skeleton
+          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(2).fill(0)"
+          :key="index"
+          class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
+        />
+      </div>
+      <div
+        class="flex flex-col w-[calc(100vw-150px)] lg:w-[calc(100vw-650px)] lg:flex-row gap-5 justify-center items-center basis-3"
       >
         <Skeleton
           v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(2).fill(0)"

@@ -172,7 +172,7 @@ watch(isDeleting, async (newValue) => {
     </main>
     <aside class="basis-1/3">
       <ScrollArea
-        class="shadow-2xl rounded-2xl h-[calc(100vh-169px)]"
+        class="shadow-lg rounded-2xl h-[calc(100vh-169px)]"
         :class="isDesktop ? '' : 'h-full'"
       >
         <Card class="rounded-2xl">
