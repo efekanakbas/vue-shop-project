@@ -68,16 +68,31 @@ const callDiv = () => {
 //& Routes
 const {
   data: menData,
-  isFetching,
-  error,
-  isLoading
+  isFetching: menFetching,
+  error: menError,
+  isLoading: menLoading
 } = handleQuery('menProduct', "products/category/men's%20clothing")
 
-const { data: womenData } = handleQuery('womanProduct', "products/category/women's%20clothing")
+const {
+  data: womenData,
+  isFetching: womenFetching,
+  error: womenError,
+  isLoading: womenLoading
+} = handleQuery('womanProduct', "products/category/women's%20clothing")
 
-const { data: electronicsData } = handleQuery('electronicsProduct', 'products/category/electronics')
+const {
+  data: electronicsData,
+  isFetching: electronicsFetching,
+  error: electronicsError,
+  isLoading: electronicsLoading
+} = handleQuery('electronicsProduct', 'products/category/electronics')
 
-const { data: jeweleryData } = handleQuery('jeweleryProduct', 'products/category/jewelery')
+const {
+  data: jeweleryData,
+  isFetching: jeweleryFetching,
+  error: jeweleryError,
+  isLoading: jeweleryLoading
+} = handleQuery('jeweleryProduct', 'products/category/jewelery')
 
 //&
 
@@ -113,8 +128,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <template v-if="error"> ERROR! </template>
-  <template v-else-if="isLoading">
+  <template v-if="menError || womenError || jeweleryError || electronicsError"> ERROR! </template>
+  <template v-else-if="menLoading || womenLoading || jeweleryLoading || electronicsLoading">
     <div class="h-[200vh] w-full space-y-5 flex flex-col items-center justify-start">
       <Skeleton class="rounded-lg w-[140px] h-10" />
       <Skeleton class="rounded-lg mx-auto w-[calc(100vw-40px)] lg:w-full h-[500px]" />
@@ -130,7 +145,7 @@ onUnmounted(() => {
       </div>
     </div>
   </template>
-  <template v-else-if="isFetching">
+  <template v-else-if="menFetching || womenFetching || jeweleryFetching || electronicsFetching">
     <div class="h-[200vh] w-full space-y-5 flex flex-col items-center justify-start">
       <Skeleton class="rounded-lg w-[140px] h-10" />
       <Skeleton class="rounded-lg mx-auto w-[calc(100vw-40px)] lg:w-full h-[500px]" />
