@@ -64,17 +64,17 @@ const { data, isLoading, isFetching } = handleQuery('product', `products/${props
 
 <template>
   <template v-if="isLoading">
-    <div class="h-[calc(100vh-104px)] w-full flex items-center justify-center">
+    <div class="h-[calc(100vh-120px)] w-full flex items-center justify-center">
       <LoaderCircle class="animate-spin text-orange-600" :size="72" />
     </div>
   </template>
   <template v-else-if="isFetching">
-    <div class="h-[calc(100vh-104px)] w-full flex items-center justify-center">
+    <div class="h-[calc(100vh-120px)] w-full flex items-center justify-center">
       <LoaderCircle class="animate-spin text-orange-600" :size="72" />
     </div>
   </template>
   <template v-else>
-    <div v-motion-fade class="block lg:flex h-[calc(100vh-104px)]">
+    <div v-motion-fade class="block lg:flex h-[calc(100vh-120px)]">
       <div class="basis-5/12 flex">
         <figure class="w-full h-full flex items-center">
           <img class="object-contain w-full h-[80%]" :src="data.image" :alt="data.title" />

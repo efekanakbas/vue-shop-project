@@ -57,11 +57,11 @@ const {
       </header>
 
       <Card
-        class="w-full h-[400px] flex flex-row bg-gradient-to-r from-blue-900 to-blue-100 group"
+        class="w-full h-full lg:h-[400px] flex flex-col lg:flex-row bg-gradient-to-r from-blue-900 to-blue-100 group"
         v-for="item in menData"
         :key="item.id"
       >
-        <ProductItem :item="item" />
+        <ProductItem color="blue" :item="item" />
       </Card>
     </div>
   </template>

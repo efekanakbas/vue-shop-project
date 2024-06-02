@@ -61,7 +61,7 @@ const {
         v-for="item in electronicsData"
         :key="item.id"
       >
-        <ProductItem :item="item" />
+        <ProductItem color="sky" :item="item" />
       </Card>
     </div>
   </template>

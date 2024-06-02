@@ -18,6 +18,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
 import CartItem from '@/components/CartItem.vue'
+import { useMediaQuery } from '@vueuse/core'
 // Makros
 
 //
@@ -32,7 +33,7 @@ const isButtonClicked = ref(false)
 const localTotal = ref(counterStore.total)
 const resetRef = ref(false)
 const isDeleting = ref(false)
-
+const isDesktop = useMediaQuery('(min-width: 1024px)')
 //!
 
 //^ Handlers
@@ -130,7 +131,6 @@ watch(isDeleting, async (newValue) => {
       <SheetContent :overlay-value="true" side="right">
         <SheetHeader>
           <SheetTitle class="flex justify-center">
-            {{ resetRef }}
             <RouterLink to="/"
               ><h1 class="text-rainbow-animation text-stroke-1-black dark:text-stroke-1-white">
                 SHOPPY
@@ -143,16 +143,21 @@ watch(isDeleting, async (newValue) => {
         </SheetHeader>
         <Separator class="my-6" />
         <div class="flex justify-between items-center mb-6">
-          <h1 class="font-bold text-[32px] flex items-center">Your Cart</h1>
+          <h1 class="font-bold text-[24px] lg:text-[32px] flex items-center whitespace-nowrap">
+            Your Cart
+          </h1>
 
           <SheetClose as-child>
             <button @click="handleReset" class="flex text-gray-600 gap-1 group">
-              <p>Delete All</p>
+              <p class="whitespace-nowrap">Delete All</p>
               <Trash2 class="group-hover:scale-105" />
             </button>
           </SheetClose>
         </div>
-        <ScrollArea style="height: calc(100% - 320px)" class="bg-slate-100 rounded-md">
+        <ScrollArea
+          :style="isDesktop ? ' height: calc(100% - 276px)' : ' height: calc(100% - 260px)'"
+          class="bg-slate-100 rounded-md h-[calc(100%-276px)]"
+        >
           <ul class="flex flex-col text-gray-600 dark:text-white text-[24px] space-y-2 p-2">
             <VueDraggable
               ref="el"

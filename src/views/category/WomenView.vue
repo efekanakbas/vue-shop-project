@@ -61,7 +61,7 @@ const {
         v-for="item in womenData"
         :key="item.id"
       >
-        <ProductItem :item="item" />
+        <ProductItem color="pink" :item="item" />
       </Card>
     </div>
   </template>

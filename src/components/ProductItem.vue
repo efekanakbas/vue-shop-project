@@ -26,6 +26,7 @@ const DialogDrawer = defineAsyncComponent({
 
 const props = defineProps<{
   item: any
+  color: string
 }>()
 //~
 
@@ -107,7 +108,7 @@ const handleToPage = () => {
 //?
 
 //* consoleLogs
-
+console.log('COLOR', props.color)
 //*
 </script>
 
@@ -123,7 +124,20 @@ const handleToPage = () => {
   </CardHeader>
   <CardContent class="basis-3/5 p-4 flex flex-col justify-between py-5 pb-6">
     <div class="flex justify-between items-center">
-      <h4 class="text-blue-800 text-[16px] font-bold uppercase">{{ item.category }}</h4>
+      <h4
+        class="text-[16px] font-bold uppercase"
+        :class="
+          color === 'blue'
+            ? `text-blue-800`
+            : color === 'pink'
+              ? 'text-pink-800'
+              : color === 'sky'
+                ? 'text-sky-800'
+                : 'text-yellow-800'
+        "
+      >
+        {{ item.category }}
+      </h4>
       <StarRating
         :glow="3"
         glow-color="#ffd055"
@@ -137,11 +151,49 @@ const handleToPage = () => {
         :increment="0.01"
       ></StarRating>
     </div>
-    <h1 :title="item.title" class="text-blue-900 capitalize text-[20px] lg:text-[40px] font-bold">
+    <h1
+      :title="item.title"
+      class="capitalize text-[20px] lg:text-[40px] font-bold"
+      :class="
+        color === 'blue'
+          ? `text-blue-900`
+          : color === 'pink'
+            ? 'text-pink-900'
+            : color === 'sky'
+              ? 'text-sky-900'
+              : 'text-yellow-900'
+      "
+    >
       {{ truncatedTitle }}
     </h1>
-    <p :title="item.description" class="text-blue-800">{{ truncatedDescription }}</p>
-    <div class="text-[40px] font-bold text-blue-900">${{ computedPrice }}</div>
+    <p
+      :title="item.description"
+      :class="
+        color === 'blue'
+          ? `text-blue-800`
+          : color === 'pink'
+            ? 'text-pink-800'
+            : color === 'sky'
+              ? 'text-sky-800'
+              : 'text-yellow-800'
+      "
+    >
+      {{ truncatedDescription }}
+    </p>
+    <div
+      class="text-[40px] font-bold"
+      :class="
+        color === 'blue'
+          ? `text-blue-900`
+          : color === 'pink'
+            ? 'text-pink-900'
+            : color === 'sky'
+              ? 'text-sky-900'
+              : 'text-yellow-900'
+      "
+    >
+      ${{ computedPrice }}
+    </div>
     <div class="flex justify-between items-center">
       <div class="flex gap-4">
         <div class="bg-[#F5F5F5] h-10 rounded-lg flex items-center justify-between w-[120px] px-1">

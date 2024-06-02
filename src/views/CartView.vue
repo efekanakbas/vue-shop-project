@@ -105,7 +105,7 @@ watch(isDeleting, async (newValue) => {
 
 <template>
   <div
-    class="flex flex-col lg:flex-row overflow-auto h-[calc(100vh-104px)] bg-slate-100 dark:bg-slate-600 rounded-2xl p-6 lg:space-x-6 space-y-[52px] lg:space-y-0 w-[calc(100vw-40px)] lg:w-[100vw]"
+    class="flex flex-col lg:flex-row overflow-auto h-[calc(100vh-120px)] bg-slate-100 dark:bg-slate-600 rounded-2xl p-6 lg:space-x-6 space-y-[52px] lg:space-y-0 w-[calc(100vw-40px)] lg:w-[100vw]"
   >
     <main class="basis-2/3 h-full space-y-4">
       <div class="flex justify-between items-center">
@@ -134,7 +134,7 @@ watch(isDeleting, async (newValue) => {
             </div>
           </CardTitle>
         </CardHeader>
-        <ScrollArea class="h-[calc(100vh-309px)]">
+        <ScrollArea class="h-[calc(100vh-325px)]">
           <Alert
             class="scale-95 bg-orange-50 dark:bg-orange-700"
             v-if="counterStore.cart.length === 0"
@@ -172,7 +172,7 @@ watch(isDeleting, async (newValue) => {
     </main>
     <aside class="basis-1/3">
       <ScrollArea
-        class="shadow-2xl rounded-2xl h-[calc(100vh-153px)]"
+        class="shadow-2xl rounded-2xl h-[calc(100vh-169px)]"
         :class="isDesktop ? '' : 'h-full'"
       >
         <Card class="rounded-2xl">
@@ -229,7 +229,7 @@ watch(isDeleting, async (newValue) => {
                 >Update</Button
               >
             </section>
-            <Separator class="my-8" />
+            <Separator class="my-7" />
             <section class="space-y-4">
               <CardTitle> Coupon Code </CardTitle>
               <p class="text-gray-500">
@@ -244,7 +244,7 @@ watch(isDeleting, async (newValue) => {
                 >Aplly</Button
               >
             </section>
-            <Separator class="my-8" />
+            <Separator class="my-7" />
             <section class="bg-orange-200 dark:bg-orange-400 p-4 rounded-2xl space-y-4">
               <CardTitle> Cart Total </CardTitle>
               <div class="text-[14px]">

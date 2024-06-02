@@ -78,6 +78,7 @@ export const useCounterStore = defineStore(
         processQueue()
       }
     }
+
     //@ts-expect-error
     async function addToCart(item, number, myIf = false) {
       return new Promise((resolve, reject) => {
