@@ -13,7 +13,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { useMediaQuery } from '@vueuse/core'
 
 const props = defineProps<{
-  data: array
+  data: object
 }>()
 
 const emblaMainApi = ref<CarouselApi>()
