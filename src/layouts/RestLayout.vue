@@ -159,7 +159,7 @@ const handleLogout = () => {
 
           <DropdownMenu>
             <DropdownMenuTrigger as-child>
-              <Avatar role="dropdown" class="cursor-pointer">
+              <Avatar role="button" class="cursor-pointer">
                 <Cat />
               </Avatar>
             </DropdownMenuTrigger>

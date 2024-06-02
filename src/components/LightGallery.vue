@@ -16,6 +16,7 @@ const mappedArray = ref([])
 onMounted(() => {
   props.data?.forEach((item) => {
     mappedArray.value.push({
+      thumb: 'null',
       src: item.image,
       subHtml: `<div  class="lightGallery-captions text-shadow-class">
                     <h4>${item.title}</h4>
