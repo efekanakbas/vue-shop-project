@@ -129,7 +129,7 @@ onUnmounted(() => {
 
 <template>
   <template v-if="menError || womenError || jeweleryError || electronicsError"> ERROR! </template>
-  <template v-else-if="!menLoading || womenLoading || jeweleryLoading || electronicsLoading">
+  <template v-else-if="menLoading || womenLoading || jeweleryLoading || electronicsLoading">
     <div class="h-full w-full space-y-7 flex flex-col items-center justify-start">
       <Skeleton class="rounded-lg w-[140px] h-[40px]" />
       <div class="w-full h-full flex">
