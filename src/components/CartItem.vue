@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 //~ Imports
-import { computed, ref, onUnmounted, onMounted, onBeforeUnmount } from 'vue'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Plus, Minus, ShoppingCart, X } from 'lucide-vue-next'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Plus, Minus, X } from 'lucide-vue-next'
 import { useCounterStore } from '@/stores/counter'
 
 const props = defineProps<{
@@ -75,8 +75,6 @@ onBeforeUnmount(() => {
     props.setLocalTotal(initialTotal)
   } else {
     props.handleChangeResetRef()
-    // console.log('props.item', props.item)
-    // console.log('props.coutn', count)
     setTimeout(() => {
       counterStore.addToCart(props.item, count.value, true)
     }, 0)
@@ -86,8 +84,6 @@ onBeforeUnmount(() => {
 //?
 
 //* consoleLogs
-// console.log('dedede', props.allCost)
-// console.log('parentHandleInc', props.parentHandleInc)
 
 //*
 </script>

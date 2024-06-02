@@ -6,6 +6,7 @@ export const useCounterStore = defineStore(
   () => {
     const cart = ref([])
     const total = ref(0)
+    //@ts-expect-error
     const queue = []
     let isProcessing = false
 
@@ -41,25 +42,30 @@ export const useCounterStore = defineStore(
       }
 
       isProcessing = true
-
+      //@ts-expect-error
       const { item, number, myIf, resolve, reject } = queue.shift()
 
       try {
+        //@ts-expect-error
         const existingItem = await cart.value.find((el) => el.id === item.id)
 
         if (existingItem) {
+          //@ts-expect-error
           const numberofItem = existingItem.number
           const computedNumber = number - numberofItem
           console.log('COMPUTED', computedNumber)
-          // console.log('existingItem', existingItem)
+
+          //@ts-expect-error
           if (existingItem.number >= 11 || existingItem.number + number >= 11) {
             throw new Error('Daha fazla ekleyemezsiniz')
           } else {
             if (!myIf) {
+              //@ts-expect-error
               existingItem.number += number
             }
           }
         } else {
+          //@ts-expect-error
           await cart.value.push({ ...item, number })
         }
         await updateTotal()
@@ -72,7 +78,7 @@ export const useCounterStore = defineStore(
         processQueue()
       }
     }
-
+    //@ts-expect-error
     async function addToCart(item, number, myIf = false) {
       return new Promise((resolve, reject) => {
         queue.push({ item, number, myIf, resolve, reject })
@@ -81,6 +87,7 @@ export const useCounterStore = defineStore(
     }
 
     function deleteFromCart(item: any) {
+      //@ts-expect-error
       const existingItem = cart.value.find((el) => el.id === item.id)
 
       if (existingItem) {

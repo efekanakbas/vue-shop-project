@@ -2,11 +2,8 @@
 //~ Imports
 
 import { handleQuery } from '@/lib/tanstackQuery'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-//@ts-expect-error
-import StarRating from 'vue-star-rating'
-import { ShoppingCart } from 'lucide-vue-next'
+import { Card } from '@/components/ui/card'
+
 import ProductItem from '@/components/ProductItem.vue'
 import { Skeleton } from '@/components/ui/skeleton'
 //~
@@ -38,7 +35,8 @@ const {
 </script>
 
 <template>
-  <template v-if="isLoading">
+  <template v-if="error"> ERROR! </template>
+  <template v-else-if="isLoading">
     <div class="flex flex-col space-y-6 h-full items-center">
       <Skeleton class="w-[293.88px] h-[66px] rounded-full border" />
 

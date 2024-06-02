@@ -9,7 +9,6 @@ import { CardContent, CardHeader } from '@/components/ui/card'
 import { defineAsyncComponent, h } from 'vue'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/toast/use-toast'
-import { useCounterStore } from '@/stores/counter'
 import { useMediaQuery } from '@vueuse/core'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
@@ -64,7 +63,6 @@ const truncatedTitle = computed(() => {
 })
 
 const { toast } = useToast()
-const counterStore = useCounterStore()
 const isDesktop = useMediaQuery('(min-width: 1024px)')
 const router = useRouter()
 //!
@@ -90,20 +88,6 @@ const handleDec = () => {
     count.value--
   }
 }
-const handlerAddToCart = () => {
-  try {
-    counterStore.addToCart(props.item, count.value)
-
-    counterStore.totalHandleInc(computedPrice.value)
-  } catch (error) {
-    toast({
-      class: 'border border-red-100 border-[5px]',
-      title: "you can't add any more",
-      description: 'You can add up to 10',
-      duration: 3000
-    })
-  }
-}
 
 const handleToPage = () => {
   router.push({
@@ -123,7 +107,7 @@ const handleToPage = () => {
 //?
 
 //* consoleLogs
-// console.log('CART', counterStore.cart)
+
 //*
 </script>
 

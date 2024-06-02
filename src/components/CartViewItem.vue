@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 //~ Imports
-import { computed, ref, onUnmounted, watch, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 import { Plus, Minus, Trash } from 'lucide-vue-next'
 import { useMediaQuery } from '@vueuse/core'
@@ -74,12 +74,6 @@ const handleDelete = async () => {
 //&
 
 //? Watches
-// watch(
-//   () => counterStore.cart,
-//   (newValue) => {
-//     count.value = newValue
-//   }
-// )
 
 onMounted(() => {
   count.value = props.item.number

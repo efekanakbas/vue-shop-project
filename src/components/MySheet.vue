@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 //~ Imports
-import { computed, onMounted, ref, watch, provide, onUpdated, onUnmounted } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { type UseDraggableReturn, VueDraggable } from 'vue-draggable-plus'
 import { useCounterStore } from '@/stores/counter'
@@ -105,7 +105,7 @@ watch(isDeleting, async (newValue) => {
 //?
 
 //* consoleLogs
-// console.log('RESETREF', resetRef.value)
+
 //*
 </script>
 

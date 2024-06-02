@@ -33,12 +33,6 @@ const currentIndex = ref(0)
 const currentSlide = ref(0)
 let galleryInstance = null
 
-// const goToSlide = (index) => {
-//   if (galleryInstance) {
-//     galleryInstance.goto(index)
-//   }
-// }
-
 onMounted(() => {
   const $lgContainer = document.getElementById('inline-gallery-container')
 

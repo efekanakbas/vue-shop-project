@@ -2,26 +2,15 @@
 import { ref } from 'vue'
 import { createReusableTemplate, useMediaQuery } from '@vueuse/core'
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger
 } from '@/components/ui/drawer'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+
 import { useCounterStore } from '@/stores/counter'
 import { useAuthStore } from '@/stores/auth'
 import LoginView from '@/views/auth/LoginView.vue'
@@ -47,21 +36,15 @@ const { toast } = useToast()
 
 const handleAdd = async () => {
   if (authStore.isLogged) {
-    // Koşul doğru çalışacak şekilde düzeltildi
     const itemExists = counterStore.cart.some((el) => {
-      // console.log('item.id', item.id)
-      // console.log('PROPS.ID', props.itemID)
+      //@ts-expect-error
       return el.id == props.itemID
     })
 
-    // console.log('itemEXIST', itemExists)
-
     if (itemExists) {
       await counterStore.addToCart(props.item, props.count)
-      // console.log('Item is already in the cart')
     } else {
       await counterStore.addToCart(props.item, props.count)
-      // console.log('Item is not in the cart')
     }
   } else {
     console.log('User is not logged')
@@ -70,7 +53,6 @@ const handleAdd = async () => {
 
 const handlerAddToCart = async () => {
   try {
-    // console.log('deneme')
     await handleAdd()
   } catch (error) {
     console.log('error', error)
@@ -86,8 +68,6 @@ const handlerAddToCart = async () => {
 const handleClose = () => {
   isOpen.value = false
 }
-
-// console.log('props', props.fullWidth)
 </script>
 
 <template>
@@ -134,35 +114,4 @@ const handleClose = () => {
       </DrawerContent>
     </Drawer>
   </template>
-
-  <!-- <template v-else>
-    <Dialog v-if="isDesktop" v-model:open="isOpen">
-      <DialogTrigger as-child>
-        <Button @click="handleIncrement">Arttır</Button>
-      </DialogTrigger>
-      <DialogContent class="sm:max-w-[425px] bg-red-100 p-0 w-full">
-        <LoginView width="w-full" :handleClose="handleClose" />
-      </DialogContent>
-    </Dialog>
-
-    <Drawer v-else v-model:open="isOpen">
-      <DrawerTrigger as-child>
-        <Button @click="handleIncrement">Arttır</Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader class="text-left">
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DrawerDescription>
-        </DrawerHeader>
-        <GridForm />
-        <DrawerFooter class="pt-2">
-          <DrawerClose as-child>
-            <Button variant="outline"> Cancel </Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
-  </template> -->
 </template>

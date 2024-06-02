@@ -1,13 +1,10 @@
 <script lang="ts" setup>
 //~ Imports
-import { ref, computed, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
 import { handleQuery } from '@/lib/tanstackQuery'
 import DialogDrawer from '@/components/DialogDrawer.vue'
 import { Plus, Minus } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
-import { useCounterStore } from '@/stores/counter'
-import { useMediaQuery } from '@vueuse/core'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { LoaderCircle } from 'lucide-vue-next'
 
@@ -21,11 +18,7 @@ const props = defineProps<{
 //! Reactivity
 const count = ref(1)
 const { toast } = useToast()
-const counterStore = useCounterStore()
-const isDesktop = useMediaQuery('(min-width: 1024px)')
-const router = useRouter()
 
-const computedRating = computed(() => data.value.rating.rate)
 const computedPrice = computed(() => {
   const price = data.value.price * count.value
   return parseFloat(price.toFixed(2))
@@ -65,7 +58,7 @@ const { data, isLoading, isFetching } = handleQuery('product', `products/${props
 //?
 
 //* consoleLogs
-console.log('data2', data.value)
+
 //*
 </script>
 

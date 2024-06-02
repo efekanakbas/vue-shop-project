@@ -182,9 +182,6 @@ const handleLogout = () => {
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <!-- <RouterLink to="/auth/login">Login</RouterLink>
-          <RouterLink to="/auth/register">Register</RouterLink> -->
         </div>
       </nav>
     </header>

@@ -1,17 +1,9 @@
 <script lang="ts" setup>
 //~ Imports
-import { defineAsyncComponent, h, ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 import {
   Select,
@@ -69,9 +61,7 @@ const handleReset = () => {
 }
 
 const totalHandleInc = (value: number) => {
-  // console.log('1', value)
   cartTotal.value += value
-  // console.log('VALUE', cartTotal.value)
 }
 
 const totalHandleDec = (value: number) => {
@@ -99,26 +89,9 @@ watch(
   }
 )
 
-// watch(
-//   () => counterStore.cart,
-//   (newCart) => {
-//     cartTotal.value = newCart.reduce((acc, item) => acc + item.price * item.number, 0)
-//   },
-//   { deep: true }
-// )
-
-// onMounted(() => {
-//   console.log('CARTMOUNT')
-// })
-
-// onUnmounted(() => {
-//   console.log('CARTUUUUUNMOUNT')
-// })
-
 watch(isDeleting, async (newValue) => {
   console.log('isDeleting', isDeleting.value)
   if (newValue === true) {
-    // İşlemi güvenli hale getirmek için küçük bir gecikme ekleyebilirsiniz
     await new Promise((resolve) => setTimeout(resolve, 0))
     cartTotal.value = counterStore.total
   }

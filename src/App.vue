@@ -11,12 +11,7 @@ import Toaster from '@/components/ui/toast/Toaster.vue'
     <div class="lg:w-full py-5" id="coloredDiv">
       <div class="flex flex-row container px-5 mx-auto content justify-between">
         <router-view v-slot="{ Component }" class="view main-content flex-1 order-2">
-          <!-- <Transition :name="route.meta.transition"> -->
-          <!-- <Transition > -->
-          <!-- <KeepAlive exclude="HomeView"> -->
           <component :is="Component" />
-          <!-- </KeepAlive> -->
-          <!-- </Transition> -->
         </router-view>
         <router-view
           v-slot="{ Component }"

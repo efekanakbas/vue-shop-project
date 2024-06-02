@@ -46,7 +46,7 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit(() => {
   localStorage.setItem('loggedIn', 'true')
   if (isModal.width) {
     store.handleAuth()
@@ -70,7 +70,7 @@ const touchedPassword = useIsFieldTouched('password')
 //?
 
 //* consoleLogs
-// console.log('store', store)
+
 //*
 </script>
 

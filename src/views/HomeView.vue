@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 //~ Imports
-import { ref, onMounted, onUnmounted, onUpdated, watch } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { handleQuery } from '@/lib/tanstackQuery'
 import { watchEffect } from 'vue'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -23,7 +23,7 @@ import { useResizeObserver } from '@vueuse/core'
 import { useDarkStore } from '@/stores/dark'
 import { useMediaQuery } from '@vueuse/core'
 import ElectricityBeam from '@/components/ElectricityBeam.vue'
-import { useCounterStore } from '@/stores/counter'
+
 //~
 
 //! Reactivity
@@ -44,11 +44,6 @@ function onSelect() {
   if (!emblaMainApi.value || !emblaThumbnailApi.value) return
   selectedIndex.value = emblaMainApi.value.selectedScrollSnap()
   emblaThumbnailApi.value.scrollTo(emblaMainApi.value.selectedScrollSnap())
-}
-
-function onThumbClick(index: number) {
-  if (!emblaMainApi.value || !emblaThumbnailApi.value) return
-  emblaMainApi.value.scrollTo(index)
 }
 
 const updateBackgroundColor = (widthValue: number) => {
@@ -95,26 +90,11 @@ const {
   isLoading
 } = handleQuery('menProduct', "products/category/men's%20clothing")
 
-const {
-  data: womenData
-  // isFetching,
-  // error,
-  // isLoading
-} = handleQuery('womanProduct', "products/category/women's%20clothing")
+const { data: womenData } = handleQuery('womanProduct', "products/category/women's%20clothing")
 
-const {
-  data: electronicsData
-  // isFetching,
-  // error,
-  // isLoading
-} = handleQuery('electronicsProduct', 'products/category/electronics')
+const { data: electronicsData } = handleQuery('electronicsProduct', 'products/category/electronics')
 
-const {
-  data: jeweleryData
-  // isFetching,
-  // error,
-  // isLoading
-} = handleQuery('jeweleryProduct', 'products/category/jewelery')
+const { data: jeweleryData } = handleQuery('jeweleryProduct', 'products/category/jewelery')
 
 //&
 
@@ -158,7 +138,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <template v-if="isLoading">
+  <template v-if="error"> ERROR! </template>
+  <template v-else-if="isLoading">
     <div class="h-[200vh] space-y-5 flex flex-col items-center justify-start">
       <Skeleton class="rounded-lg w-[140px] h-10" />
       <Skeleton class="rounded-lg mx-auto max-w-[calc(100vw-40px)] lg:w-full h-[500px]" />
@@ -348,29 +329,6 @@ onUnmounted(() => {
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-
-        <!-- <Carousel
-          :drag-free="true"
-          class="relative w-full max-w-xs"
-          @init-api="(val) => (emblaThumbnailApi = val)"
-        >
-          <CarouselContent class="flex gap-1 ml-0">
-            <CarouselItem
-              v-for="(_, index) in 10"
-              :key="index"
-              class="pl-0 basis-1/4 cursor-pointer select-none"
-              @click="onThumbClick(index)"
-            >
-              <div class="p-1" :class="index === selectedIndex ? '' : 'opacity-50'">
-                <Card>
-                  <CardContent class="flex aspect-square items-center justify-center p-6">
-                    <span class="text-4xl font-semibold">{{ index + 1 }}</span>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel> -->
       </div>
       <div class="flex justify-center">
         <h1 class="text-[20px] px-6 py-2 rounded-lg text-slate-900" style="background-color: gold">

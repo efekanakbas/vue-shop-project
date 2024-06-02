@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/vue-query'
 import { getData } from '@/lib/CRUD.js'
 
 const handleQuery = (key: string, url: string, refetch: boolean = false) => {
-  // console.log('refetch', typeof refetch)
   const { isFetching, data, isLoading, error } = useQuery({
     queryKey: [key],
     queryFn: async () => {
