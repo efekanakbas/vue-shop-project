@@ -13,6 +13,10 @@ const props = defineProps<{
   localInc: (value: number) => void
   localDec: (value: number) => void
   setLocalTotal: (value: number) => void
+  handleChangeResetRef: () => void
+  handleChangeResetRefOnmount: () => void
+  resetRef: boolean
+  handleIsDeletingChange: () => void
 }>()
 //~
 
@@ -47,8 +51,10 @@ const handleInc = () => {
   }
 }
 
-const handleDelete = () => {
-  counterStore.deleteFromCart(props.item)
+const handleDelete = async () => {
+  props.handleIsDeletingChange()
+  await counterStore.deleteFromCart(props.item)
+  props.handleIsDeletingChange()
 }
 
 //^
@@ -59,39 +65,21 @@ const handleDelete = () => {
 
 //? Watches
 
-// onUnmounted(() => {
-//   console.log('PRRRRRRRRRROPS', props.isButtonClicked)
-
-//   setTimeout(() => {
-//     if (!props.isButtonClicked) {
-//       console.log('ula')
-//       counterStore.total = initialTotal
-//     } else {
-//       counterStore.handleResetCart()
-//       counterStore.addToCart(props.item, count.value)
-//       if (props.item.some((el) => el.id != props.item.id)) {
-//         counterStore.handleIncCount()
-//       }
-//     }
-
-//
-//   }, 0)
-// })
-
 onMounted(() => {
-  console.log('Mount oldum 2')
+  props.handleChangeResetRefOnmount()
 })
 
 onBeforeUnmount(() => {
+  console.log('QQQQQQQQQQQQQQ')
   if (!props.isButtonClicked) {
-    console.log('DENEDENE')
     props.setLocalTotal(initialTotal)
   } else {
-    counterStore.handleResetCart()
-    counterStore.addToCart(props.item, count.value)
-    if (counterStore.cart.some((el: any) => el.id != props.item.id)) {
-      counterStore.handleIncCount()
-    }
+    props.handleChangeResetRef()
+    // console.log('props.item', props.item)
+    // console.log('props.coutn', count)
+    setTimeout(() => {
+      counterStore.addToCart(props.item, count.value, true)
+    }, 0)
   }
   props.handleClicked()
 })

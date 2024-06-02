@@ -39,7 +39,7 @@ const {
 
 <template>
   <template v-if="error"> ERROR! </template>
-  <template v-if="isLoading">
+  <template v-else-if="isLoading">
     <div class="flex flex-col space-y-6 h-full items-center">
       <Skeleton class="w-[229.3px] h-[66px] rounded-full border" />
 

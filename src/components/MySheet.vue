@@ -30,11 +30,25 @@ const router = useRouter()
 const route = useRoute()
 const isButtonClicked = ref(false)
 const localTotal = ref(counterStore.total)
-const isItemOpen = ref(false)
+const resetRef = ref(false)
+const isDeleting = ref(false)
 
 //!
 
 //^ Handlers
+
+const handleIsDeletingChange = () => {
+  isDeleting.value = !isDeleting.value
+}
+
+const handleChangeResetRef = () => {
+  resetRef.value = true
+}
+
+const handleChangeResetRefOnmount = () => {
+  resetRef.value = false
+}
+
 const localInc = (value: number) => {
   localTotal.value += value
 }
@@ -67,17 +81,31 @@ const handleClicked = () => {
 //&
 
 //? Watches
-onMounted(() => {
-  console.log('MOUNT OLDUM')
+watch(
+  () => counterStore.total,
+  (newValue) => {
+    localTotal.value = newValue
+  }
+)
+
+watch(resetRef, (newValue) => {
+  if (newValue == true) {
+    counterStore.handleResetCart()
+  }
 })
 
-onUnmounted(() => {
-  console.log('UNMOUNT OLDUM')
+watch(isDeleting, async (newValue) => {
+  console.log('isDeleting', isDeleting.value)
+  if (newValue === true) {
+    // İşlemi güvenli hale getirmek için küçük bir gecikme ekleyebilirsiniz
+    await new Promise((resolve) => setTimeout(resolve, 0))
+    localTotal.value = counterStore.total
+  }
 })
 //?
 
 //* consoleLogs
-
+// console.log('RESETREF', resetRef.value)
 //*
 </script>
 
@@ -93,7 +121,7 @@ onUnmounted(() => {
       <SheetTrigger as-child>
         <button
           v-motion-slide-right
-          v-if="counterStore.count !== 0"
+          v-if="counterStore.cart.length !== 0"
           class="bg-orange-600/40 lg:bg-orange-600/70 p-2 pl-3 lg:p-3 lg:pl-4 rounded-l-full text-white fixed right-0 top-[49%]"
         >
           <ShoppingCart />
@@ -102,6 +130,7 @@ onUnmounted(() => {
       <SheetContent :overlay-value="true" side="right">
         <SheetHeader>
           <SheetTitle class="flex justify-center">
+            {{ resetRef }}
             <RouterLink to="/"
               ><h1 class="text-rainbow-animation text-stroke-1-black dark:text-stroke-1-white">
                 SHOPPY
@@ -141,6 +170,10 @@ onUnmounted(() => {
                 "
               >
                 <CartItem
+                  :handleIsDeletingChange="handleIsDeletingChange"
+                  :handleChangeResetRefOnmount="handleChangeResetRefOnmount"
+                  :handleChangeResetRef="handleChangeResetRef"
+                  :resetRef="resetRef"
                   :localTotal="localTotal"
                   :setLocalTotal="setLocalTotal"
                   :localInc="localInc"

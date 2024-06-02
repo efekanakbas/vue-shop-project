@@ -90,21 +90,20 @@ const handleDec = () => {
     count.value--
   }
 }
-// const handlerAddToCart = () => {
-//   try {
-//     counterStore.addToCart(props.item, count.value)
-//     // counterStore.handleIncCount()
+const handlerAddToCart = () => {
+  try {
+    counterStore.addToCart(props.item, count.value)
 
-//     counterStore.totalHandleInc(computedPrice.value)
-//   } catch (error) {
-//     toast({
-//       class: 'border border-red-100 border-[5px]',
-//       title: "you can't add any more",
-//       description: 'You can add up to 10',
-//       duration: 3000
-//     })
-//   }
-// }
+    counterStore.totalHandleInc(computedPrice.value)
+  } catch (error) {
+    toast({
+      class: 'border border-red-100 border-[5px]',
+      title: "you can't add any more",
+      description: 'You can add up to 10',
+      duration: 3000
+    })
+  }
+}
 
 const handleToPage = () => {
   router.push({
@@ -165,7 +164,12 @@ const handleToPage = () => {
           <button @click="handleDec" class="text-orange-500"><Minus /></button> {{ count }}
           <button @click="handleInc" class="text-orange-500"><Plus /></button>
         </div>
-        <DialogDrawer :itemID="item.id" :computedPrice="computedPrice" />
+        <DialogDrawer
+          :item="item"
+          :count="count"
+          :itemID="item.id"
+          :computedPrice="computedPrice"
+        />
       </div>
       <TooltipProvider>
         <Tooltip>

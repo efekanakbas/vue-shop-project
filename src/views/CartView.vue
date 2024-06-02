@@ -44,13 +44,21 @@ const router = useRouter()
 
 const cartTotal = ref(counterStore.total)
 const localArray = ref(counterStore.cart)
-
+const isDeleting = ref(false)
 //!
 
 //^ Handlers
+
+const handleIsDeletingChange = () => {
+  isDeleting.value = !isDeleting.value
+}
+
 const handleBuy = () => {
   window.alert('Congratulations! You made a purchase')
   counterStore.$reset()
+  router.push({
+    name: 'home'
+  })
 }
 
 const handleReset = () => {
@@ -61,9 +69,9 @@ const handleReset = () => {
 }
 
 const totalHandleInc = (value: number) => {
-  console.log('1', value)
+  // console.log('1', value)
   cartTotal.value += value
-  console.log('VALUE', cartTotal.value)
+  // console.log('VALUE', cartTotal.value)
 }
 
 const totalHandleDec = (value: number) => {
@@ -99,12 +107,21 @@ watch(
 //   { deep: true }
 // )
 
-onMounted(() => {
-  console.log('CARTMOUNT')
-})
+// onMounted(() => {
+//   console.log('CARTMOUNT')
+// })
 
-onUnmounted(() => {
-  console.log('CARTUUUUUNMOUNT')
+// onUnmounted(() => {
+//   console.log('CARTUUUUUNMOUNT')
+// })
+
+watch(isDeleting, async (newValue) => {
+  console.log('isDeleting', isDeleting.value)
+  if (newValue === true) {
+    // İşlemi güvenli hale getirmek için küçük bir gecikme ekleyebilirsiniz
+    await new Promise((resolve) => setTimeout(resolve, 0))
+    cartTotal.value = counterStore.total
+  }
 })
 //?
 
@@ -162,6 +179,7 @@ onUnmounted(() => {
             "
           >
             <CartViewItem
+              :handleIsDeletingChange="handleIsDeletingChange"
               :cartTotal="cartTotal"
               :totalHandleInc="totalHandleInc"
               :totalHandleDec="totalHandleDec"

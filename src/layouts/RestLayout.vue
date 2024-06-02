@@ -151,8 +151,8 @@ const handleLogout = () => {
           <Button class="w-12" v-if="authStore.isLogged" as-child variant="secondary" size="sm">
             <RouterLink to="/cart" class="relative">
               <ShoppingCart />
-              <Badge v-if="counterStore.count > 0" class="absolute -top-2 -right-4">{{
-                counterStore.count
+              <Badge v-if="counterStore.cart.length > 0" class="absolute -top-2 -right-4">{{
+                counterStore.cart.length
               }}</Badge>
             </RouterLink>
           </Button>

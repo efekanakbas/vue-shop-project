@@ -9,6 +9,7 @@ import { useToast } from '@/components/ui/toast/use-toast'
 import { useCounterStore } from '@/stores/counter'
 import { useMediaQuery } from '@vueuse/core'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { LoaderCircle } from 'lucide-vue-next'
 
 // Makros
 const props = defineProps<{
@@ -52,20 +53,7 @@ const handleDec = () => {
     count.value--
   }
 }
-// const handlerAddToCart = () => {
-//   try {
-//     counterStore.addToCart(data.value, count.value)
 
-//     counterStore.totalHandleInc(computedPrice.value)
-//   } catch (error) {
-//     toast({
-//       class: 'border border-red-100 border-[5px]',
-//       title: "you can't add any more",
-//       description: 'You can add up to 10',
-//       duration: 3000
-//     })
-//   }
-// }
 //^
 
 //& Routes
@@ -82,7 +70,11 @@ console.log('data2', data.value)
 </script>
 
 <template>
-  <template v-if="isLoading"> Loading </template>
+  <template v-if="isLoading">
+    <div class="h-[calc(100vh-104px)] w-full flex items-center justify-center">
+      <LoaderCircle class="animate-spin text-orange-600" :size="72" />
+    </div>
+  </template>
   <template v-else-if="isFetching"> Fetching </template>
   <template v-else>
     <div v-motion-fade class="block lg:flex h-[calc(100vh-104px)]">
@@ -107,6 +99,8 @@ console.log('data2', data.value)
           </div>
           <div class="flex gap-4 flex-col items-center">
             <DialogDrawer
+              :item="data"
+              :count="count"
               class="w-full"
               :computedPrice="computedPrice"
               :itemID="data.id"

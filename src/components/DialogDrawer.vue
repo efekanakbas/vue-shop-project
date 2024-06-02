@@ -32,6 +32,8 @@ const props = defineProps<{
   fullWidth?: boolean
   itemID: number
   computedPrice: number
+  count: number
+  item: object
 }>()
 
 // Reuse `form` section
@@ -43,10 +45,35 @@ const counterStore = useCounterStore()
 const authStore = useAuthStore()
 const { toast } = useToast()
 
-const handlerAddToCart = () => {
+const handleAdd = async () => {
+  if (authStore.isLogged) {
+    // Koşul doğru çalışacak şekilde düzeltildi
+    const itemExists = counterStore.cart.some((el) => {
+      // console.log('item.id', item.id)
+      // console.log('PROPS.ID', props.itemID)
+      return el.id == props.itemID
+    })
+
+    // console.log('itemEXIST', itemExists)
+
+    if (itemExists) {
+      await counterStore.addToCart(props.item, props.count)
+      // console.log('Item is already in the cart')
+    } else {
+      await counterStore.addToCart(props.item, props.count)
+      // console.log('Item is not in the cart')
+    }
+  } else {
+    console.log('User is not logged')
+  }
+}
+
+const handlerAddToCart = async () => {
   try {
-    console.log('deneme')
+    // console.log('deneme')
+    await handleAdd()
   } catch (error) {
+    console.log('error', error)
     toast({
       class: 'border border-red-100 border-[5px]',
       title: "you can't add any more",
@@ -55,30 +82,6 @@ const handlerAddToCart = () => {
     })
   }
 }
-
-// const handleIncrement = () => {
-//   if (authStore.isLogged && props.handlerAddToCart) {
-//     // Koşul doğru çalışacak şekilde düzeltildi
-//     const itemExists = counterStore.cart.some((item) => {
-//       // console.log('item.id', item.id)
-//       // console.log('PROPS.ID', props.itemID)
-//       return item.id == props.itemID
-//     })
-
-//     console.log('itemEXIST', itemExists)
-
-//     if (itemExists) {
-//       props.handlerAddToCart()
-//       console.log('Item is already in the cart')
-//     } else {
-//       props.handlerAddToCart()
-//       props.handle && counterStore.handleIncCount()
-//       console.log('Item is not in the cart')
-//     }
-//   } else {
-//     console.log('User is not logged in or handlerAddToCart is not available')
-//   }
-// }
 
 const handleClose = () => {
   isOpen.value = false
