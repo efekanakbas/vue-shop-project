@@ -68,7 +68,11 @@ const { data, isLoading, isFetching } = handleQuery('product', `products/${props
       <LoaderCircle class="animate-spin text-orange-600" :size="72" />
     </div>
   </template>
-  <template v-else-if="isFetching"> Fetching </template>
+  <template v-else-if="isFetching">
+    <div class="h-[calc(100vh-104px)] w-full flex items-center justify-center">
+      <LoaderCircle class="animate-spin text-orange-600" :size="72" />
+    </div>
+  </template>
   <template v-else>
     <div v-motion-fade class="block lg:flex h-[calc(100vh-104px)]">
       <div class="basis-5/12 flex">
