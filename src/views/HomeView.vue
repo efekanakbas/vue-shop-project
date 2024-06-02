@@ -217,7 +217,7 @@ onUnmounted(() => {
                 >
                   <CardContent class="p-3 flex justify-center">
                     <img
-                      :alt="item.alt"
+                      :alt="item.title"
                       class="object-contain w-[90px] h-[110px] lg:w-[176px] lg:h-[216px]"
                       :src="item.image"
                     />
@@ -320,7 +320,7 @@ onUnmounted(() => {
                   <CardContent
                     class="flex aspect-square items-center justify-center p-8 transform transition-transform duration-200 group-hover:scale-105"
                   >
-                    <img :alt="item.alt" class="object-contain w-full h-full" :src="item.image" />
+                    <img :alt="item.title" class="object-contain w-full h-full" :src="item.image" />
                   </CardContent>
                   <Separator />
                   <CardFooter class="p-3 flex justify-center"> {{ item.category }} </CardFooter>

@@ -118,7 +118,7 @@ const handleToPage = () => {
     <img
       class="object-contain w-full h-full bg-white rounded-lg"
       :src="item.image"
-      alt="item.title"
+      :alt="item.title"
     />
   </CardHeader>
   <CardContent class="basis-3/5 p-4 flex flex-col justify-between py-5 pb-6">
