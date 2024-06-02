@@ -132,8 +132,18 @@ onUnmounted(() => {
   <template v-else-if="menLoading || womenLoading || jeweleryLoading || electronicsLoading">
     <div class="h-full w-full space-y-7 flex flex-col items-center justify-start">
       <Skeleton class="rounded-lg w-[140px] h-[40px]" />
-      <Skeleton class="rounded-lg mx-auto w-[calc(100vw-40px)] lg:w-full h-[500px]" />
-      <Skeleton class="rounded-lg w-[324px] h-[66px]" />
+      <div class="w-full h-full flex">
+        <Skeleton
+          class="rounded-lg mx-auto w-[calc(50vw-20px)] lg:w-full h-[500px] rounded-r-none bg-blue-100"
+        />
+        <Skeleton
+          class="rounded-lg mx-auto w-[calc(50vw-20px)] lg:w-full h-[500px] rounded-l-none bg-pink-100"
+        />
+      </div>
+
+      <Skeleton
+        class="rounded-lg w-[324px] h-[66px] bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-500"
+      />
       <div
         class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-5 justify-center items-center basis-3"
       >
@@ -143,7 +153,7 @@ onUnmounted(() => {
           class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
         />
       </div>
-      <Skeleton class="rounded-lg w-[128.14px] h-[46px]" />
+      <Skeleton style="background-color: gold" class="rounded-lg w-[128.14px] h-[46px]" />
       <div
         class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-5 justify-center items-center basis-3"
       >
