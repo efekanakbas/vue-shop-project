@@ -70,7 +70,7 @@ const touchedPassword = useIsFieldTouched('password')
 //?
 
 //* consoleLogs
-console.log('store', store)
+// console.log('store', store)
 //*
 </script>
 

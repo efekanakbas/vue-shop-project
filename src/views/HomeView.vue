@@ -36,6 +36,7 @@ const widthValue = ref(679)
 const coloredDiv2 = ref<HTMLElement | null>(null)
 const darkStore = useDarkStore()
 const isDesktop = useMediaQuery('(min-width: 1024px)')
+
 //!
 
 //^ Handlers
@@ -224,7 +225,15 @@ onUnmounted(() => {
                   }
                 }"
               >
-                <Card class="hover:scale-105 cursor-pointer transition-scale duration-200">
+                <Card
+                  @click="
+                    $router.push({
+                      name: 'product',
+                      params: { id: item.id }
+                    })
+                  "
+                  class="hover:scale-105 cursor-pointer transition-scale duration-200"
+                >
                   <CardContent class="p-3 flex justify-center">
                     <img
                       class="object-contain w-[90px] h-[110px] lg:w-[176px] lg:h-[216px]"
@@ -263,7 +272,15 @@ onUnmounted(() => {
                   }
                 }"
               >
-                <Card class="hover:scale-105 cursor-pointer transition-scale duration-200">
+                <Card
+                  @click="
+                    $router.push({
+                      name: 'product',
+                      params: { id: item.id }
+                    })
+                  "
+                  class="hover:scale-105 cursor-pointer transition-scale duration-200"
+                >
                   <CardContent class="p-3 flex justify-center">
                     <img
                       class="object-contain w-[90px] h-[110px] lg:w-[176px] lg:h-[216px]"
@@ -310,9 +327,10 @@ onUnmounted(() => {
               <div class="p-1">
                 <Card
                   @click="
-                    () => {
-                      console.log('clicked')
-                    }
+                    $router.push({
+                      name: 'product',
+                      params: { id: item.id }
+                    })
                   "
                   class="group transition-transform duration-200 select-none"
                 >

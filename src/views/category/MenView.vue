@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import StarRating from 'vue-star-rating'
 import { ShoppingCart } from 'lucide-vue-next'
 import ProductItem from '@/components/ProductItem.vue'
+import { Skeleton } from '@/components/ui/skeleton'
 //~
 
 //! Reactivity
@@ -37,11 +38,21 @@ const {
 </script>
 
 <template>
+  <template v-if="error"> ERROR! </template>
   <template v-if="isLoading">
-    <div>Yükleniyor...</div>
+    <div class="flex flex-col space-y-6 h-full items-center">
+      <Skeleton class="w-[229.3px] h-[66px] rounded-full border" />
+
+      <Skeleton
+        class="w-full h-[400px] flex bg-gradient-to-r from-blue-900 to-blue-100"
+        role="listitem"
+        v-for="(_, index) in Array(4).fill(0)"
+        :key="index"
+      />
+    </div>
   </template>
   <template v-else-if="isFetching">
-    <div>İşlem devam ediyor...</div>
+    <div>Fetching...</div>
   </template>
   <template v-else>
     <div v-motion-fade class="h-full flex flex-col space-y-6">

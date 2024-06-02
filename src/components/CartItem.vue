@@ -1,12 +1,18 @@
 <script lang="ts" setup>
 //~ Imports
-import { computed, ref, onUnmounted } from 'vue'
+import { computed, ref, onUnmounted, onMounted, onBeforeUnmount } from 'vue'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Plus, Minus, ShoppingCart, X } from 'lucide-vue-next'
 import { useCounterStore } from '@/stores/counter'
 
 const props = defineProps<{
   item: any
+  isButtonClicked?: boolean
+  handleClicked: () => void
+  localTotal: number
+  localInc: (value: number) => void
+  localDec: (value: number) => void
+  setLocalTotal: (value: number) => void
 }>()
 //~
 
@@ -20,10 +26,6 @@ const computedPrice = computed(() => {
 const initialTotal = counterStore.total
 const count = ref(props.item.number)
 
-onUnmounted(() => {
-  counterStore.total = initialTotal
-})
-
 //!
 
 //^ Handlers
@@ -31,7 +33,7 @@ const handleDec = () => {
   if (count.value < 2) {
     return
   } else {
-    counterStore.totalHandleDec(props.item.price)
+    props.localDec(props.item.price)
     count.value--
   }
 }
@@ -40,13 +42,13 @@ const handleInc = () => {
   if (count.value >= 10) {
     return
   } else {
-    counterStore.totalHandleInc(props.item.price)
+    props.localInc(props.item.price)
     count.value++
   }
 }
 
 const handleDelete = () => {
-  console.log('deleted')
+  counterStore.deleteFromCart(props.item)
 }
 
 //^
@@ -56,19 +58,54 @@ const handleDelete = () => {
 //&
 
 //? Watches
-// watchEffect(() => {
-//   console.log('allcost')
+
+// onUnmounted(() => {
+//   console.log('PRRRRRRRRRROPS', props.isButtonClicked)
+
+//   setTimeout(() => {
+//     if (!props.isButtonClicked) {
+//       console.log('ula')
+//       counterStore.total = initialTotal
+//     } else {
+//       counterStore.handleResetCart()
+//       counterStore.addToCart(props.item, count.value)
+//       if (props.item.some((el) => el.id != props.item.id)) {
+//         counterStore.handleIncCount()
+//       }
+//     }
+
+//
+//   }, 0)
 // })
+
+onMounted(() => {
+  console.log('Mount oldum 2')
+})
+
+onBeforeUnmount(() => {
+  if (!props.isButtonClicked) {
+    console.log('DENEDENE')
+    props.setLocalTotal(initialTotal)
+  } else {
+    counterStore.handleResetCart()
+    counterStore.addToCart(props.item, count.value)
+    if (counterStore.cart.some((el: any) => el.id != props.item.id)) {
+      counterStore.handleIncCount()
+    }
+  }
+  props.handleClicked()
+})
 //?
 
 //* consoleLogs
 // console.log('dedede', props.allCost)
 // console.log('parentHandleInc', props.parentHandleInc)
+
 //*
 </script>
 
 <template>
-  <Card class="flex relative bg-transparent">
+  <Card class="flex relative bg-transparent h-[180px]">
     <X
       @click="handleDelete"
       role="button"
@@ -77,7 +114,7 @@ const handleDelete = () => {
     <CardHeader class="p-2 basis-2/5">
       <img class="object-contain w-full h-full" :src="item.image" :alt="item.title" />
     </CardHeader>
-    <CardContent class="basis-3/5 p-2 flex justify-end flex-col items-center gap-2 lg:gap-8">
+    <CardContent class="basis-3/5 p-2 flex justify-center flex-col items-center gap-2 lg:gap-8">
       <!-- <h1 class="">{{ item.category }}</h1> -->
       <span
         class="text-orange-500 text-[20px] lg:text-[28px] bg-slate-100 py-1 lg:py-2 px-4 lg:px-6 rounded-lg"

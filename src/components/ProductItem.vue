@@ -1,16 +1,17 @@
 <script lang="ts" setup>
 //~ Imports
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 //@ts-expect-error
 import StarRating from 'vue-star-rating'
-import { Plus, Minus } from 'lucide-vue-next'
+import { Plus, Minus, Eye } from 'lucide-vue-next'
 import { CardContent, CardHeader } from '@/components/ui/card'
 import { defineAsyncComponent, h } from 'vue'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { useCounterStore } from '@/stores/counter'
 import { useMediaQuery } from '@vueuse/core'
-import { inject } from 'vue'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 const DialogDrawer = defineAsyncComponent({
   loader: () => import('@/components/DialogDrawer.vue'),
@@ -44,14 +45,28 @@ const truncatedDescription = computed(() => {
       ? props.item.description.substring(0, 200) + '...'
       : props.item.description
   } else {
-    return props.item.description
+    return props.item.description.length > 200
+      ? props.item.description.substring(0, 200) + '...'
+      : props.item.description
+  }
+})
+
+const truncatedTitle = computed(() => {
+  if (!isDesktop.value) {
+    return props.item.title.length > 30
+      ? props.item.title.substring(0, 30) + '...'
+      : props.item.title
+  } else {
+    return props.item.title.length > 30
+      ? props.item.title.substring(0, 30) + '...'
+      : props.item.title
   }
 })
 
 const { toast } = useToast()
 const counterStore = useCounterStore()
 const isDesktop = useMediaQuery('(min-width: 1024px)')
-
+const router = useRouter()
 //!
 
 //^ Handlers
@@ -75,19 +90,27 @@ const handleDec = () => {
     count.value--
   }
 }
-const handlerAddToCart = () => {
-  try {
-    counterStore.addToCart(props.item, count.value)
+// const handlerAddToCart = () => {
+//   try {
+//     counterStore.addToCart(props.item, count.value)
+//     // counterStore.handleIncCount()
 
-    counterStore.totalHandleInc(computedPrice.value)
-  } catch (error) {
-    toast({
-      class: 'border border-red-100 border-[5px]',
-      title: "you can't add any more",
-      description: 'You can add up to 10',
-      duration: 3000
-    })
-  }
+//     counterStore.totalHandleInc(computedPrice.value)
+//   } catch (error) {
+//     toast({
+//       class: 'border border-red-100 border-[5px]',
+//       title: "you can't add any more",
+//       description: 'You can add up to 10',
+//       duration: 3000
+//     })
+//   }
+// }
+
+const handleToPage = () => {
+  router.push({
+    name: 'product',
+    params: { id: props.item.id }
+  })
 }
 
 //^
@@ -131,15 +154,34 @@ const handlerAddToCart = () => {
         :increment="0.01"
       ></StarRating>
     </div>
-    <h1 class="text-blue-900 capitalize text-[20px] lg:text-[40px] font-bold">{{ item.title }}</h1>
-    <p class="text-blue-800">{{ truncatedDescription }}</p>
+    <h1 :title="item.title" class="text-blue-900 capitalize text-[20px] lg:text-[40px] font-bold">
+      {{ truncatedTitle }}
+    </h1>
+    <p :title="item.description" class="text-blue-800">{{ truncatedDescription }}</p>
     <div class="text-[40px] font-bold text-blue-900">${{ computedPrice }}</div>
-    <div class="flex gap-4 items-center">
-      <div class="bg-[#F5F5F5] h-10 rounded-lg flex items-center justify-between w-[120px] px-1">
-        <button @click="handleDec" class="text-orange-500"><Minus /></button> {{ count }}
-        <button @click="handleInc" class="text-orange-500"><Plus /></button>
+    <div class="flex justify-between items-center">
+      <div class="flex gap-4">
+        <div class="bg-[#F5F5F5] h-10 rounded-lg flex items-center justify-between w-[120px] px-1">
+          <button @click="handleDec" class="text-orange-500"><Minus /></button> {{ count }}
+          <button @click="handleInc" class="text-orange-500"><Plus /></button>
+        </div>
+        <DialogDrawer :itemID="item.id" :computedPrice="computedPrice" />
       </div>
-      <DialogDrawer :handlerAddToCart="handlerAddToCart" />
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <button
+              @click="handleToPage"
+              class="flex gap-4 group/button text-gray-500 text-[20px] items-center"
+            >
+              <Eye :size="40" class="group-hover/button:scale-110 transition-scale duration-300" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>To Product Page</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   </CardContent>
 </template>

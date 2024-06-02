@@ -28,6 +28,7 @@ onMounted(() => {
 console.log('LOLOLO', mappedArray.value)
 
 const images = ref(mappedArray.value)
+const currentIndex = ref(0)
 
 const currentSlide = ref(0)
 let galleryInstance = null
@@ -58,6 +59,8 @@ onMounted(() => {
   })
 
   $lgContainer.addEventListener('lgBeforeSlide', (event) => {
+    currentIndex.value = event.detail.index
+
     currentSlide.value = event.detail.index
   })
 
@@ -65,10 +68,62 @@ onMounted(() => {
     galleryInstance.openGallery()
   }, 200)
 })
+
+const isPointerMoved = ref(false)
+const isWrapClicked = ref(false)
+
+// const nextButton = ref()
+// const prevButton = ref()
+const wrap = ref()
+
+onMounted(() => {
+  wrap.value = document.getElementsByClassName('lg-inner')[0]
+  wrap.value.classList.add('cursor-pointer')
+
+  if (wrap.value) {
+    wrap.value.addEventListener('mousedown', () => {
+      isWrapClicked.value = true
+      console.log('Wrap clicked1')
+    })
+  }
+  if (wrap.value) {
+    wrap.value.addEventListener('mouseup', () => {
+      isWrapClicked.value = false
+      console.log('Wrap clicked2')
+    })
+  }
+  if (wrap.value) {
+    wrap.value.addEventListener('mouseleave', () => {
+      isWrapClicked.value = false
+      console.log('Wrap clicked3')
+    })
+  }
+})
 </script>
 
 <template>
-  <div class="d-flex justify-content-center">
+  <div
+    @pointerdown="isPointerMoved = false"
+    @pointermove="isPointerMoved = true"
+    @pointerup="
+      () => {
+        // if point moved, don't do any thing
+        if (isPointerMoved) {
+          isPointerMoved = true
+          return
+        }
+        //if point haven't moved, handle the click event as you wish
+        if (isWrapClicked) {
+          $router.push({
+            name: 'product',
+            params: { id: data[currentIndex].id }
+          })
+        }
+      }
+    "
+    class="d-flex justify-content-center select-none"
+  >
+    {{ isWrapClicked }}
     <div id="inline-gallery-container" class="inline-gallery-container"></div>
   </div>
 </template>

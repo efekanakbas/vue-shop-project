@@ -29,8 +29,6 @@ const props = defineProps<
   }
 >()
 
-console.log('props.overlay', typeof props.overlayValue)
-
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {

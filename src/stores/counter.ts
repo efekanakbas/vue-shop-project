@@ -1,4 +1,4 @@
-import { ref, computed, reactive, watch } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useCounterStore = defineStore(
@@ -6,30 +6,31 @@ export const useCounterStore = defineStore(
   () => {
     const count = ref(0)
     const cart = ref([])
-
-    const allCost = computed(() => {
-      return cart.value.reduce((total, item) => {
-        //@ts-expect-error
-        const totalValue = total + item.price * item.number
-        return parseFloat(totalValue.toFixed(2))
-      }, 0)
-    })
     const total = ref(0)
-    // allCost değiştiğinde total'i güncellemek için watch kullanıyoruz
-    watch(
-      allCost,
-      (newVal) => {
-        total.value = newVal
-      },
-      { once: true }
-    )
+
+    const handleResetCart = () => {
+      cart.value = []
+      updateTotal()
+    }
+
+    const handleIncCount = () => {
+      count.value++
+    }
+
+    const updateTotal = () => {
+      console.log('UPDADADADA')
+      total.value = cart.value.reduce((acc, item) => {
+        //@ts-expect-error
+        return acc + item.price * item.number
+      }, 0)
+    }
+
     const totalHandleInc = (value: any) => {
       total.value += value
     }
 
     const totalHandleDec = (value: any) => {
-      console.log('DECLENDİN')
-      total.value -= value
+      total.value = total.value - value
     }
 
     function $reset() {
@@ -38,27 +39,43 @@ export const useCounterStore = defineStore(
       total.value = 0
     }
 
-    function addToCart(item: object, number: number) {
-      //@ts-expect-error
+    function addToCart(item: any, number: number) {
       const existingItem = cart.value.find((el) => el.id === item.id)
 
       if (existingItem) {
-        //@ts-expect-error
         if (existingItem.number >= 11 || existingItem.number + number >= 11) {
           throw new Error('Daha fazla ekleyemezsiniz')
         } else {
-          //@ts-expect-error
           existingItem.number += number
         }
       } else {
-        item = { ...item, number }
-        //@ts-expect-error
-        cart.value.push(item)
-        count.value++
+        cart.value.push({ ...item, number })
+      }
+      updateTotal()
+    }
+
+    function deleteFromCart(item: any) {
+      const existingItem = cart.value.find((el) => el.id === item.id)
+
+      if (existingItem) {
+        cart.value = cart.value.filter((el) => el !== existingItem)
+        updateTotal()
       }
     }
 
-    return { count, $reset, cart, addToCart, allCost, total, totalHandleInc, totalHandleDec }
+    return {
+      count,
+      $reset,
+      cart,
+      addToCart,
+      total,
+      deleteFromCart,
+      handleResetCart,
+      handleIncCount,
+      totalHandleInc,
+      totalHandleDec,
+      updateTotal
+    }
   },
   { persist: true }
 )

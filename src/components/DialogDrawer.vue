@@ -26,9 +26,12 @@ import { useCounterStore } from '@/stores/counter'
 import { useAuthStore } from '@/stores/auth'
 import LoginView from '@/views/auth/LoginView.vue'
 import { ShoppingCart } from 'lucide-vue-next'
+import { useToast } from '@/components/ui/toast/use-toast'
 
 const props = defineProps<{
-  handlerAddToCart?: () => void
+  fullWidth?: boolean
+  itemID: number
+  computedPrice: number
 }>()
 
 // Reuse `form` section
@@ -36,26 +39,58 @@ const [UseTemplate, GridForm] = createReusableTemplate()
 const isDesktop = useMediaQuery('(min-width: 1024px)')
 
 const isOpen = ref(false)
-const store = useCounterStore()
+const counterStore = useCounterStore()
 const authStore = useAuthStore()
+const { toast } = useToast()
 
-const handleIncrement = () => {
-  if (authStore.isLogged && props.handlerAddToCart) {
-    props.handlerAddToCart()
-  } else {
+const handlerAddToCart = () => {
+  try {
     console.log('deneme')
+  } catch (error) {
+    toast({
+      class: 'border border-red-100 border-[5px]',
+      title: "you can't add any more",
+      description: 'You can add up to 10',
+      duration: 3000
+    })
   }
 }
+
+// const handleIncrement = () => {
+//   if (authStore.isLogged && props.handlerAddToCart) {
+//     // Koşul doğru çalışacak şekilde düzeltildi
+//     const itemExists = counterStore.cart.some((item) => {
+//       // console.log('item.id', item.id)
+//       // console.log('PROPS.ID', props.itemID)
+//       return item.id == props.itemID
+//     })
+
+//     console.log('itemEXIST', itemExists)
+
+//     if (itemExists) {
+//       props.handlerAddToCart()
+//       console.log('Item is already in the cart')
+//     } else {
+//       props.handlerAddToCart()
+//       props.handle && counterStore.handleIncCount()
+//       console.log('Item is not in the cart')
+//     }
+//   } else {
+//     console.log('User is not logged in or handlerAddToCart is not available')
+//   }
+// }
 
 const handleClose = () => {
   isOpen.value = false
 }
+
+// console.log('props', props.fullWidth)
 </script>
 
 <template>
   <template v-if="authStore.isLogged">
     <div>
-      <Button @click="handleIncrement" class="flex gap-4">
+      <Button @click="handlerAddToCart" :class="props.fullWidth && 'w-full'" class="flex gap-4">
         <figure><ShoppingCart /></figure>
         Add to cart
       </Button>
@@ -69,7 +104,7 @@ const handleClose = () => {
 
     <Dialog v-if="isDesktop" v-model:open="isOpen">
       <DialogTrigger as-child>
-        <Button @click="handleIncrement" class="flex gap-4">
+        <Button @click="handlerAddToCart" class="flex gap-4">
           <figure><ShoppingCart /></figure>
           Add to cart
         </Button>
@@ -81,7 +116,7 @@ const handleClose = () => {
 
     <Drawer v-else v-model:open="isOpen">
       <DrawerTrigger as-child>
-        <Button @click="handleIncrement" class="flex gap-4">
+        <Button @click="handlerAddToCart" class="flex gap-4">
           <figure><ShoppingCart /></figure>
           Add to cart
         </Button>
@@ -97,7 +132,7 @@ const handleClose = () => {
     </Drawer>
   </template>
 
-  <template v-else>
+  <!-- <template v-else>
     <Dialog v-if="isDesktop" v-model:open="isOpen">
       <DialogTrigger as-child>
         <Button @click="handleIncrement">Arttır</Button>
@@ -126,5 +161,5 @@ const handleClose = () => {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  </template>
+  </template> -->
 </template>

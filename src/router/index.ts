@@ -111,7 +111,7 @@ const router = createRouter({
     {
       path: '/product/:id',
       name: 'product',
-      component: () => import('@/views/Product.vue'),
+      component: () => import('@/views/ProductView.vue'),
       props: true,
       meta: {
         layout: RestLayout
@@ -126,7 +126,7 @@ router.beforeEach((to, from) => {
   // if (!isAuthenticated() && !authRoutes.includes(to.fullPath)) {
   //   return { name: 'login' }
   // }
-  console.log('isAuth', isAuthenticated())
+  // console.log('isAuth', isAuthenticated())
   if (isAuthenticated() && authRoutes.includes(to.fullPath)) {
     return { name: 'home' }
   } else {
