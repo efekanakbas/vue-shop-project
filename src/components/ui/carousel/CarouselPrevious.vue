@@ -12,6 +12,7 @@ const { orientation, canScrollPrev, scrollPrev } = useCarousel()
 
 <template>
   <Button
+    role="button"
     :disabled="!canScrollPrev"
     :class="
       cn(

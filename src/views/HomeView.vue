@@ -148,7 +148,7 @@ onUnmounted(() => {
         class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-6 justify-center items-center basis-3"
       >
         <Skeleton
-          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(2).fill(0)"
+          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(1).fill(0)"
           :key="index"
           class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
         />
@@ -158,7 +158,7 @@ onUnmounted(() => {
         class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-6 justify-center items-center basis-3"
       >
         <Skeleton
-          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(2).fill(0)"
+          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(1).fill(0)"
           :key="index"
           class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
         />
