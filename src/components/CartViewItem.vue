@@ -123,7 +123,7 @@ onMounted(() => {
       <div class="basis-1/3 font-bold">${{ item.price }}</div>
       <div class="basis-1/3">
         <div
-          class="bg-[#F5F5F5] h-8 lg:h-8 rounded-lg flex items-center justify-between w-[80px] lg:w-[80px] px-1"
+          class="bg-[#F5F5F5] dark:bg-slate-800 h-8 lg:h-8 rounded-lg flex items-center justify-between w-[80px] lg:w-[80px] px-1"
         >
           <button @click="handleDec" class="text-orange-500"><Minus :size="20" /></button>
           {{ count }}

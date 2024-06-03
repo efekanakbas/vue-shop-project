@@ -196,7 +196,9 @@ console.log('COLOR', props.color)
     </div>
     <div class="flex justify-between items-center">
       <div class="flex gap-4">
-        <div class="bg-[#F5F5F5] h-10 rounded-lg flex items-center justify-between w-[120px] px-1">
+        <div
+          class="bg-[#F5F5F5] dark:bg-slate-800 h-10 rounded-lg flex items-center justify-between w-[120px] px-1"
+        >
           <button @click="handleDec" class="text-orange-500"><Minus /></button> {{ count }}
           <button @click="handleInc" class="text-orange-500"><Plus /></button>
         </div>

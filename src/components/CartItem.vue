@@ -105,7 +105,7 @@ onBeforeUnmount(() => {
         >{{ computedPrice }}</span
       >
       <div
-        class="bg-[#F5F5F5] h-8 lg:h-10 rounded-lg flex items-center justify-between w-[90px] lg:w-[120px] px-1"
+        class="bg-[#F5F5F5] dark:bg-slate-800 h-8 lg:h-10 rounded-lg flex items-center justify-between w-[90px] lg:w-[120px] px-1"
       >
         <button @click="handleDec" class="text-orange-500"><Minus /></button>
         {{ count }}
