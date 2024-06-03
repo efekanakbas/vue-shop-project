@@ -12,6 +12,7 @@ const { orientation, canScrollNext, scrollNext } = useCarousel()
 
 <template>
   <Button
+    aria-label="Next button"
     role="button"
     :disabled="!canScrollNext"
     :class="

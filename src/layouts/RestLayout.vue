@@ -158,7 +158,13 @@ const handleLogout = () => {
           </Button>
 
           <DropdownMenu>
-            <DropdownMenuTrigger as-child>
+            <DropdownMenuTrigger
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="Open menu"
+              as-child
+            >
               <Avatar class="cursor-pointer">
                 <Cat />
               </Avatar>

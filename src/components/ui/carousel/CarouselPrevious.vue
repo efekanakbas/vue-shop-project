@@ -12,6 +12,7 @@ const { orientation, canScrollPrev, scrollPrev } = useCarousel()
 
 <template>
   <Button
+    aria-label="Previous button"
     role="button"
     :disabled="!canScrollPrev"
     :class="
