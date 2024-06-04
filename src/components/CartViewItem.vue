@@ -101,18 +101,23 @@ onMounted(() => {
 
         <div class="hidden lg:flex flex-col justify-evenly">
           <div class="flex flex-col">
-            <h3 class="text-gray-500 text-[14px] uppercase px-3">{{ item.category }}</h3>
-            <p :title="item.title" class="text-gray-900 text-[14px] font-bold ps-3 pe-10">
+            <h3 class="text-gray-500 dark:text-gray-300 text-[14px] uppercase px-3">
+              {{ item.category }}
+            </h3>
+            <p
+              :title="item.title"
+              class="text-gray-900 dark:text-gray-100 text-[14px] font-bold ps-3 pe-10"
+            >
               {{ truncatedTitle }}
             </p>
           </div>
           <div class="flex flex-col text-[14px]">
             <div class="flex px-3">
-              <p class="text-gray-500 w-[60px]">Rate</p>
+              <p class="text-gray-500 dark:text-gray-300 w-[60px]">Rate</p>
               <p>• {{ item.rating.rate }}</p>
             </div>
             <div class="flex text-[14px] px-3">
-              <p class="text-gray-500 w-[60px]">Count</p>
+              <p class="text-gray-500 dark:text-gray-300 w-[60px]">Count</p>
               <p class="w-12">• {{ item.rating.count }}</p>
             </div>
           </div>

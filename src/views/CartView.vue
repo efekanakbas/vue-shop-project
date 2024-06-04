@@ -244,7 +244,7 @@ watch(isDeleting, async (newValue) => {
             <Separator class="my-7" />
             <section class="space-y-4">
               <CardTitle> Coupon Code </CardTitle>
-              <p class="text-gray-500">
+              <p class="text-gray-500 dark:text-gray-300">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, odit.
               </p>
               <Input
