@@ -310,7 +310,7 @@ onUnmounted(() => {
       <section class="space-y-7">
         <div class="flex justify-center">
           <h1
-            class="text-[20px] w-[140px] h-[40px] flex justify-center items-center rounded-lg text-yellow-800 bg-yellow-400 dark:bg-yellow-800 dark:text-yellow-400"
+            class="text-[20px] w-[140px] h-[40px] flex justify-center items-center rounded-lg text-yellow-950 bg-yellow-400 dark:bg-yellow-950 dark:text-yellow-400"
           >
             Jewelery!
           </h1>

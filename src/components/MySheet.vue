@@ -124,6 +124,7 @@ watch(isDeleting, async (newValue) => {
           v-motion-slide-right
           v-if="counterStore.cart.length !== 0"
           class="bg-orange-600/40 lg:bg-orange-600/70 p-2 pl-3 lg:p-3 lg:pl-4 rounded-l-full text-white fixed right-0 top-[49%]"
+          aria-label="Teleport button"
         >
           <ShoppingCart />
         </button>
