@@ -76,13 +76,16 @@ const touchedPassword = useIsFieldTouched('password')
 
 <template>
   <div class="flex justify-center items-center">
-    <Card :class="width ? width : 'w-2/5'">
-      <CardHeader class="flex justify-center w-full bg-slate-100">
+    <Card class="rounded-lg" :class="width ? width : ' w-full lg:w-2/5'">
+      <CardHeader class="flex justify-center w-full rounded-t-lg bg-slate-100 dark:bg-slate-900">
         <CardTitle class="mx-auto text-orange-500">Login Form</CardTitle>
         <CardDescription class="mx-auto text-orange-400">Login for interactions</CardDescription>
       </CardHeader>
-      <CardContent class="p-0 rounded-t-sm">
-        <form class="space-y-6 bg-orange-100 p-7" @submit="onSubmit">
+      <CardContent class="p-0">
+        <form
+          class="space-y-6 bg-orange-100 rounded-b-lg w-full h-full dark:bg-orange-950 p-7"
+          @submit="onSubmit"
+        >
           <FormField v-slot="{ componentField }" name="email">
             <FormItem v-auto-animate>
               <FormLabel>E-Mail</FormLabel>
@@ -103,11 +106,13 @@ const touchedPassword = useIsFieldTouched('password')
               <FormMessage v-if="touchedPassword" />
             </FormItem>
           </FormField>
-          <Button type="submit" class="w-full"> Submit </Button>
-          <Separator style="margin-top: 40px" />
-          <Button as-child class="w-full" type="button" variant="link">
-            <RouterLink to="/auth/register"> Are you new here? </RouterLink>
-          </Button>
+          <div class="space-y-6">
+            <Button type="submit" class="w-full"> Submit </Button>
+            <Separator class="dark:bg-white translate-y-2" />
+            <Button as-child class="w-full dark:text-white bg" type="button" variant="link">
+              <RouterLink to="/auth/register"> Are you new here? </RouterLink>
+            </Button>
+          </div>
         </form>
       </CardContent>
     </Card>

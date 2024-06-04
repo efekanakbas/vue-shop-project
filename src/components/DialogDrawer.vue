@@ -106,7 +106,7 @@ const handleClose = () => {
       </DrawerTrigger>
       <DrawerContent>
         <GridForm />
-        <DrawerFooter class="pt-4 bg-slate-100">
+        <DrawerFooter class="pt-4 bg-slate-100 dark:bg-slate-900">
           <DrawerClose as-child>
             <Button variant="outline"> Cancel </Button>
           </DrawerClose>

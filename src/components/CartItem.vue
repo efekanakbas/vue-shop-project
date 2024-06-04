@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <Card class="flex relative bg-transparent h-[180px]">
+  <Card class="flex relative bg-transparent h-[180px] dark:bg-slate-900">
     <X
       @click="handleDelete"
       role="button"
@@ -98,14 +98,14 @@ onBeforeUnmount(() => {
     <CardHeader class="p-2 basis-2/5">
       <img class="object-contain w-full h-full" :src="item.image" :alt="item.title" />
     </CardHeader>
-    <CardContent class="basis-3/5 p-2 flex justify-center flex-col items-center gap-2 lg:gap-8">
+    <CardContent class="basis-3/5 p-2 flex justify-center flex-col items-center gap-4 lg:gap-8">
       <!-- <h1 class="">{{ item.category }}</h1> -->
       <span
-        class="text-orange-500 text-[20px] lg:text-[28px] bg-slate-100 py-1 lg:py-2 px-4 lg:px-6 rounded-lg"
+        class="text-orange-500 dark:text-white text-[20px] lg:text-[28px] bg-slate-100 dark:bg-slate-700 py-1 lg:py-2 px-4 lg:px-6 rounded-lg"
         >{{ computedPrice }}</span
       >
       <div
-        class="bg-[#F5F5F5] dark:bg-slate-800 h-8 lg:h-10 rounded-lg flex items-center justify-between w-[90px] lg:w-[120px] px-1"
+        class="bg-[#F5F5F5] dark:bg-slate-700 h-8 lg:h-10 rounded-lg flex items-center justify-between w-[90px] lg:w-[120px] px-1"
       >
         <button @click="handleDec" class="text-orange-500"><Minus /></button>
         {{ count }}

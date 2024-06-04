@@ -66,7 +66,7 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                   params: { id: item.id }
                 })
               "
-              class="group transition-transform duration-200 select-none"
+              class="group transition-transform duration-200 select-none dark:bg-slate-900"
             >
               <CardContent
                 class="flex aspect-square items-center justify-center p-8 transform transition-transform duration-200 group-hover:scale-105"

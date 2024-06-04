@@ -24,6 +24,7 @@ import CartViewItem from '@/components/CartViewItem.vue'
 import { useMediaQuery } from '@vueuse/core'
 import { Trash2 } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
+import { useToast } from '@/components/ui/toast/use-toast'
 
 //~
 
@@ -37,6 +38,7 @@ const router = useRouter()
 const cartTotal = ref(counterStore.total)
 const localArray = ref(counterStore.cart)
 const isDeleting = ref(false)
+const { toast } = useToast()
 //!
 
 //^ Handlers
@@ -54,10 +56,20 @@ const handleBuy = () => {
 }
 
 const handleReset = () => {
-  counterStore.$reset()
-  router.push({
-    name: 'home'
-  })
+  if (counterStore.cart.length !== 0) {
+    counterStore.$reset()
+    router.push({
+      name: 'home'
+    })
+  } else {
+    console.log('denememem')
+    toast({
+      class: 'border border-red-100 border-[5px]',
+      title: "You can't reset your cart",
+      description: 'You have no product in your cart',
+      duration: 3000
+    })
+  }
 }
 
 const totalHandleInc = (value: number) => {
@@ -105,7 +117,7 @@ watch(isDeleting, async (newValue) => {
 
 <template>
   <div
-    class="flex flex-col lg:flex-row overflow-auto h-[calc(100vh-120px)] bg-slate-100 dark:bg-slate-600 rounded-2xl p-6 lg:space-x-6 space-y-[52px] lg:space-y-0 w-[calc(100vw-40px)] lg:w-[100vw]"
+    class="flex flex-col lg:flex-row overflow-auto h-[calc(100vh-120px)] bg-slate-100 dark:bg-slate-700 rounded-2xl p-6 lg:space-x-6 space-y-[52px] lg:space-y-0 w-[calc(100vw-40px)] lg:w-[100vw]"
   >
     <main class="basis-2/3 h-full space-y-4">
       <div class="flex justify-between items-center">
@@ -136,7 +148,7 @@ watch(isDeleting, async (newValue) => {
         </CardHeader>
         <ScrollArea class="h-[calc(100vh-325px)]">
           <Alert
-            class="scale-95 bg-orange-50 dark:bg-orange-700"
+            class="scale-95 bg-orange-50 dark:bg-orange-950 mt-2 lg:mt-0"
             v-if="counterStore.cart.length === 0"
           >
             <AlertTitle>Heads up!</AlertTitle>
@@ -245,7 +257,7 @@ watch(isDeleting, async (newValue) => {
               >
             </section>
             <Separator class="my-7" />
-            <section class="bg-orange-200 dark:bg-orange-400 p-4 rounded-2xl space-y-4">
+            <section class="bg-orange-200 dark:bg-orange-950 p-4 rounded-2xl space-y-4">
               <CardTitle> Cart Total </CardTitle>
               <div class="text-[14px]">
                 <div class="flex justify-between">
@@ -268,7 +280,7 @@ watch(isDeleting, async (newValue) => {
                 </div>
                 <div class="flex justify-between">
                   <p class="font-bold">Card Total</p>
-                  <p class="text-orange-500 dark:text-orange-900 font-bold scale-125 underline">
+                  <p class="text-orange-500 font-bold scale-125 underline">
                     ${{
                       coupon
                         ? parseFloat((cartTotal - 10).toFixed(2))

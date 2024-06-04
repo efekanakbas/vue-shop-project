@@ -156,7 +156,7 @@ watch(isDeleting, async (newValue) => {
         </div>
         <ScrollArea
           :style="isDesktop ? ' height: calc(100% - 276px)' : ' height: calc(100% - 260px)'"
-          class="bg-slate-100 rounded-md h-[calc(100%-276px)]"
+          class="bg-slate-100 dark:bg-slate-800 rounded-md h-[calc(100%-276px)]"
         >
           <ul class="flex flex-col text-gray-600 dark:text-white text-[24px] space-y-2 p-2">
             <VueDraggable
@@ -200,13 +200,13 @@ watch(isDeleting, async (newValue) => {
             }
           "
           role="button"
-          class="flex justify-center mt-7 text-[32px] bg-orange-100 rounded-lg text-orange-500 items-center space-x-6 group cursor-pointer"
+          class="flex justify-center mt-7 text-[32px] bg-orange-100 dark:bg-orange-950 rounded-lg text-orange-500 dark:text-white items-center space-x-6 group cursor-pointer"
         >
           <!-- --------------------------------------------------------- -->
           <p>{{ parseFloat(localTotal.toFixed(2)) }}</p>
           <!-- --------------------------------------------------------- -->
           <ShoppingCart
-            class="group-hover:translate-x-20 transition-transform duration-500"
+            class="group-hover:translate-x-10 lg:group-hover:translate-x-20transition-transform duration-500"
             :size="32"
           />
         </Card>

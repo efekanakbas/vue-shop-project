@@ -2,6 +2,15 @@
 import { RouterView } from 'vue-router'
 import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 import Toaster from '@/components/ui/toast/Toaster.vue'
+import { useDark } from '@vueuse/core'
+
+useDark({
+  selector: 'body',
+  attribute: 'class',
+  valueDark: 'dark',
+  valueLight: 'light',
+  disableTransition: false
+})
 </script>
 
 <template>

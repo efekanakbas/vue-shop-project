@@ -18,12 +18,11 @@ import MyCarousel from '@/components/MyCarousel.vue'
 //~
 
 //! Reactivity
-
+const isDesktop = useMediaQuery('(min-width: 1024px)')
 const el = ref(null)
-const widthValue = ref(679)
+const widthValue = ref(isDesktop.value ? 679 : 180)
 const coloredDiv2 = ref<HTMLElement | null>(null)
 const darkStore = useDarkStore()
-const isDesktop = useMediaQuery('(min-width: 1024px)')
 
 //!
 
@@ -37,7 +36,7 @@ const updateBackgroundColor = (widthValue: number) => {
     //@ts-expect-error
     start.map((startVal: any, i: number) => Math.round(startVal + factor * (end[i] - startVal)))
 
-  const factor = widthValue / 1359
+  const factor = isDesktop.value ? widthValue / 1359 : widthValue / 360
   //@ts-expect-error
   let interpolatedColor = interpolateColor(minColor, maxColor, factor)
 
@@ -68,28 +67,24 @@ const callDiv = () => {
 //& Routes
 const {
   data: menData,
-  isFetching: menFetching,
   error: menError,
   isLoading: menLoading
 } = handleQuery('menProduct', "products/category/men's%20clothing")
 
 const {
   data: womenData,
-  isFetching: womenFetching,
   error: womenError,
   isLoading: womenLoading
 } = handleQuery('womanProduct', "products/category/women's%20clothing")
 
 const {
   data: electronicsData,
-  isFetching: electronicsFetching,
   error: electronicsError,
   isLoading: electronicsLoading
 } = handleQuery('electronicsProduct', 'products/category/electronics')
 
 const {
   data: jeweleryData,
-  isFetching: jeweleryFetching,
   error: jeweleryError,
   isLoading: jeweleryLoading
 } = handleQuery('jeweleryProduct', 'products/category/jewelery')
@@ -130,14 +125,14 @@ onUnmounted(() => {
 <template>
   <template v-if="menError || womenError || jeweleryError || electronicsError"> ERROR! </template>
   <template v-else-if="menLoading || womenLoading || jeweleryLoading || electronicsLoading">
-    <div class="h-full w-full space-y-7 flex flex-col items-center justify-start">
+    <div class="h-full w-full space-y-7 flex flex-col items-center justify-start pb-3">
       <Skeleton class="rounded-lg w-[140px] h-[40px]" />
       <div class="w-full h-full flex">
         <Skeleton
-          class="rounded-lg mx-auto w-[calc(50vw-20px)] lg:w-full h-[500px] rounded-r-none bg-blue-100"
+          class="rounded-lg mx-auto w-[calc(50vw-20px)] lg:w-full h-[500px] rounded-r-none bg-blue-100 dark:bg-blue-950"
         />
         <Skeleton
-          class="rounded-lg mx-auto w-[calc(50vw-20px)] lg:w-full h-[500px] rounded-l-none bg-pink-100"
+          class="rounded-lg mx-auto w-[calc(50vw-20px)] lg:w-full h-[500px] rounded-l-none bg-pink-100 dark:bg-pink-950"
         />
       </div>
 
@@ -150,52 +145,27 @@ onUnmounted(() => {
         <Skeleton
           v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(1).fill(0)"
           :key="index"
-          class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
+          class="rounded-lg h-[260px] lg:h-[482.66px] w-full flex-wrap"
         />
       </div>
-      <Skeleton style="background-color: gold" class="rounded-lg w-[128.14px] h-[46px]" />
+      <Skeleton class="rounded-lg w-[140px] h-[40px] bg-yellow-400 translate-y-1" />
       <div
-        class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-6 justify-center items-center basis-3"
+        class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-6 justify-center items-center basis-3 translate-y-2"
       >
         <Skeleton
           v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(1).fill(0)"
           :key="index"
-          class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
-        />
-      </div>
-    </div>
-  </template>
-  <template v-else-if="menFetching || womenFetching || jeweleryFetching || electronicsFetching">
-    <div class="h-[300vh] w-full space-y-7 flex flex-col items-center justify-start">
-      <Skeleton class="rounded-lg w-[140px] h-10" />
-      <Skeleton class="rounded-lg mx-auto w-[calc(100vw-40px)] lg:w-full h-[500px]" />
-      <Skeleton class="rounded-lg w-[324px] h-[62px]" />
-      <div
-        class="flex flex-col w-[calc(100vw-150px)] lg:w-full lg:flex-row gap-5 justify-center items-center basis-3"
-      >
-        <Skeleton
-          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(2).fill(0)"
-          :key="index"
-          class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
-        />
-      </div>
-      <div
-        class="flex flex-col w-[calc(100vw-150px)] lg:w-[calc(100vw-650px)] lg:flex-row gap-5 justify-center items-center basis-3"
-      >
-        <Skeleton
-          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(2).fill(0)"
-          :key="index"
-          class="rounded-lg h-[260px] lg:h-[483.66px] w-full flex-wrap"
+          class="rounded-lg h-[260px] lg:h-[482.66px] w-full flex-wrap"
         />
       </div>
     </div>
   </template>
   <template v-else>
-    <div class="w-full flex flex-col space-y-7">
+    <div class="w-full flex flex-col space-y-7 h-full">
       <section class="space-y-7">
         <div class="flex justify-center">
           <h1
-            class="text-[20px] bg-white dark:bg-black dark:text-white w-[140px] h-[40px] flex justify-center items-center rounded-lg"
+            class="text-[20px] bg-white dark:text-white w-[140px] h-[40px] flex justify-center items-center rounded-lg dark:bg-slate-900"
           >
             Clothings!
           </h1>
@@ -217,7 +187,7 @@ onUnmounted(() => {
           class="rounded-lg mx-auto max-w-[calc(100vw-40px)] lg:w-full max-h-[500px] overflow-auto"
           direction="horizontal"
         >
-          <ResizablePanel ref="el" class="bg-blue-100 overflow-auto">
+          <ResizablePanel ref="el" class="bg-blue-100 dark:bg-blue-950 overflow-auto">
             <h1 class="text-[40px] text-blue-600 text-center">Man</h1>
             <Separator class="bg-blue-300" />
             <ScrollArea style="height: calc(100% - 60px)" class="w-full rounded-md px-4">
@@ -248,7 +218,7 @@ onUnmounted(() => {
                         params: { id: item.id }
                       })
                     "
-                    class="hover:scale-105 cursor-pointer transition-scale duration-200"
+                    class="hover:scale-105 cursor-pointer transition-scale duration-200 dark:bg-blue-900"
                   >
                     <CardContent class="p-3 flex justify-center">
                       <img
@@ -265,7 +235,7 @@ onUnmounted(() => {
             </ScrollArea>
           </ResizablePanel>
           <ResizableHandle with-handle />
-          <ResizablePanel class="bg-pink-100 overflow-auto">
+          <ResizablePanel class="bg-pink-100 dark:bg-pink-950 overflow-auto">
             <h1 class="text-[40px] text-pink-600 text-center">Woman</h1>
             <Separator class="bg-pink-300" />
             <ScrollArea style="height: calc(100% - 60px)" class="w-full rounded-md px-4">
@@ -296,7 +266,7 @@ onUnmounted(() => {
                         params: { id: item.id }
                       })
                     "
-                    class="hover:scale-105 cursor-pointer transition-scale duration-200"
+                    class="hover:scale-105 cursor-pointer transition-scale duration-200 dark:bg-pink-900"
                   >
                     <CardContent class="p-3 flex justify-center">
                       <img
@@ -323,12 +293,14 @@ onUnmounted(() => {
             <div class="w-full h-full flex justify-center items-center">
               <Separator orientation="vertical" class="h-14 bg-blue-900 dark:bg-white" />
               <ElectricityBeam
-                class="bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-500"
+                class="bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-500 dark:from-indigo-900 dark:via-indigo-700 dark:to-indigo-900"
               />
               <Separator orientation="vertical" class="h-14 bg-blue-900 dark:bg-white" />
             </div>
           </span>
-          <h1 class="overflow-hidden text-blue-900 opacity-80 p-4 z-10 text-[20px] font-bold">
+          <h1
+            class="overflow-hidden text-blue-900 dark:text-white opacity-80 p-4 z-10 text-[20px] font-bold"
+          >
             Electronics!
             <div class="sparkles absolute inset-0 z-10"></div>
           </h1>
@@ -338,8 +310,7 @@ onUnmounted(() => {
       <section class="space-y-7">
         <div class="flex justify-center">
           <h1
-            class="text-[20px] px-6 py-2 rounded-lg text-yellow-800"
-            style="background-color: gold"
+            class="text-[20px] w-[140px] h-[40px] flex justify-center items-center rounded-lg text-yellow-800 bg-yellow-400 dark:bg-yellow-800 dark:text-yellow-400"
           >
             Jewelery!
           </h1>

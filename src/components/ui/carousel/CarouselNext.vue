@@ -4,8 +4,11 @@ import { useCarousel } from './useCarousel'
 import type { WithClassAsProps } from './interface'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { useDark } from '@vueuse/core'
 
 const props = defineProps<WithClassAsProps>()
+
+const isDark = useDark()
 
 const { orientation, canScrollNext, scrollNext } = useCarousel()
 </script>
@@ -21,7 +24,8 @@ const { orientation, canScrollNext, scrollNext } = useCarousel()
         orientation === 'horizontal'
           ? '-right-12 top-1/2 -translate-y-1/2'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
-        props.class
+        props.class,
+        { 'next-button-dark-mode': isDark }
       )
     "
     variant="outline"
@@ -32,3 +36,9 @@ const { orientation, canScrollNext, scrollNext } = useCarousel()
     </slot>
   </Button>
 </template>
+
+<style scoped>
+.next-button-dark-mode {
+  background-color: rgb(15 23 42);
+}
+</style>

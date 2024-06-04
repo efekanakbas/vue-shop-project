@@ -30,7 +30,7 @@ const handleInc = () => {
   if (count.value > 9) {
     toast({
       class: 'border border-red-100 border-[5px]',
-      title: "you can't increase it any more",
+      title: "You can't increase it any more",
       description: 'You can increase up to 10',
       duration: 3000
     })
@@ -74,7 +74,7 @@ const { data, isLoading, isFetching } = handleQuery('product', `products/${props
     </div>
   </template>
   <template v-else>
-    <div v-motion-fade class="block lg:flex h-[calc(100vh-120px)]">
+    <div v-motion-fade class="block h-full lg:flex lg:h-[calc(100vh-120px)]">
       <div class="basis-5/12 flex">
         <figure class="w-full h-full flex items-center">
           <img class="object-contain w-full h-[80%]" :src="data.image" :alt="data.title" />
@@ -82,14 +82,14 @@ const { data, isLoading, isFetching } = handleQuery('product', `products/${props
       </div>
       <ScrollArea class="basis-7/12 py-20 px-4">
         <div class="flex flex-col justify-center space-y-10">
-          <h1 class="uppercase text-gray-600 font-bold">{{ data.category }}</h1>
+          <h1 class="uppercase text-gray-600 font-bold dark:text-gray-300">{{ data.category }}</h1>
           <h3 class="text-[40px] font-extrabold">{{ data.title }}</h3>
-          <p class="text-gray-600">
+          <p class="text-gray-600 dark:text-gray-300">
             {{ data.description }}
           </p>
           <span class="font-bold text-[32px] text-center">${{ computedPrice }}</span>
           <div
-            class="bg-[#F5F5F5] h-10 rounded-lg flex items-center justify-between w-[120px] px-1 mx-auto"
+            class="bg-[#F5F5F5] h-10 rounded-lg flex items-center justify-between w-[120px] px-1 mx-auto dark:bg-slate-700"
           >
             <button @click="handleDec" class="text-orange-500"><Minus /></button> {{ count }}
             <button @click="handleInc" class="text-orange-500"><Plus /></button>

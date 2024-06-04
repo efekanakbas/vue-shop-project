@@ -19,7 +19,6 @@ import { Skeleton } from '@/components/ui/skeleton'
 //& Routes
 const {
   data: jeweleryData,
-  isFetching,
   error,
   isLoading
 } = handleQuery('jeweleryProduct', 'products/category/jewelery')
@@ -37,19 +36,16 @@ const {
 <template>
   <template v-if="error"> ERROR! </template>
   <template v-else-if="isLoading">
-    <div class="flex flex-col space-y-6 h-full items-center">
+    <div class="flex flex-col space-y-6 h-full items-center w-[calc(100vw-48px)] lg:w-full">
       <Skeleton class="w-[293.88px] h-[66px] rounded-full border" />
 
       <Skeleton
-        class="w-full h-[400px] flex bg-gradient-to-r from-yellow-900 to-yellow-100"
+        class="w-[calc(100vw-40px)] lg:w-full h-[500px] lg:h-[400px] flex bg-gradient-to-r from-yellow-900 to-yellow-100 dark:from-yellow-950 dark:to-yellow-800"
         role="listitem"
         v-for="(_, index) in Array(4).fill(0)"
         :key="index"
       />
     </div>
-  </template>
-  <template v-else-if="isFetching">
-    <div>İşlem devam ediyor...</div>
   </template>
   <template v-else>
     <div v-motion-fade class="h-full flex flex-col space-y-6">
@@ -58,7 +54,7 @@ const {
       </header>
 
       <Card
-        class="w-full h-[400px] flex flex-row bg-gradient-to-r from-yellow-900 to-yellow-100 group"
+        class="w-[calc(100vw-49px)] lg:w-full h-full lg:h-[400px] flex flex-col lg:flex-row bg-gradient-to-r from-yellow-900 to-yellow-100 dark:from-yellow-950 dark:to-yellow-800 group"
         v-for="item in jeweleryData"
         :key="item.id"
       >

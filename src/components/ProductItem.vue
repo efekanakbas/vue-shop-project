@@ -11,6 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { useMediaQuery } from '@vueuse/core'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { useDark } from '@vueuse/core'
 
 const DialogDrawer = defineAsyncComponent({
   loader: () => import('@/components/DialogDrawer.vue'),
@@ -66,6 +67,7 @@ const truncatedTitle = computed(() => {
 const { toast } = useToast()
 const isDesktop = useMediaQuery('(min-width: 1024px)')
 const router = useRouter()
+const isDark = useDark()
 //!
 
 //^ Handlers
@@ -73,7 +75,7 @@ const handleInc = () => {
   if (count.value > 9) {
     toast({
       class: 'border border-red-100 border-[5px]',
-      title: "you can't increase it any more",
+      title: "You can't increase it any more",
       description: 'You can increase up to 10',
       duration: 3000
     })
@@ -116,11 +118,22 @@ console.log('COLOR', props.color)
   <CardHeader
     class="basis-2/5 rounded-lg transform transition-transform duration-200 group-hover:scale-105"
   >
-    <img
-      class="object-contain w-full h-full bg-white rounded-lg"
-      :src="item.image"
-      :alt="item.title"
-    />
+    <figure class="h-[200px] lg:h-full">
+      <img
+        class="object-contain w-full h-full bg-white rounded-lg"
+        :src="item.image"
+        :alt="item.title"
+        :class="
+          color === 'blue'
+            ? `dark:bg-blue-900`
+            : color === 'pink'
+              ? 'dark:bg-pink-900'
+              : color === 'sky'
+                ? 'dark:bg-sky-900'
+                : 'dark:bg-yellow-900'
+        "
+      />
+    </figure>
   </CardHeader>
   <CardContent class="basis-3/5 p-4 flex flex-col justify-between py-5 pb-6">
     <div class="flex justify-between items-center">
@@ -128,18 +141,18 @@ console.log('COLOR', props.color)
         class="text-[16px] font-bold uppercase"
         :class="
           color === 'blue'
-            ? `text-blue-800`
+            ? `text-blue-800 dark:text-blue-300`
             : color === 'pink'
-              ? 'text-pink-800'
+              ? 'text-pink-800 dark:text-pink-300'
               : color === 'sky'
-                ? 'text-sky-800'
-                : 'text-yellow-800'
+                ? 'text-sky-800 dark:text-sky-300'
+                : 'text-yellow-800 dark:text-yellow-300'
         "
       >
         {{ item.category }}
       </h4>
       <StarRating
-        :glow="3"
+        :glow="!isDark ? 3 : 0"
         glow-color="#ffd055"
         :star-size="20"
         :rounded-corners="true"
@@ -156,12 +169,12 @@ console.log('COLOR', props.color)
       class="capitalize text-[20px] lg:text-[40px] font-bold"
       :class="
         color === 'blue'
-          ? `text-blue-900`
+          ? `text-blue-900 dark:text-blue-200`
           : color === 'pink'
-            ? 'text-pink-900'
+            ? 'text-pink-900 dark:text-pink-200'
             : color === 'sky'
-              ? 'text-sky-900'
-              : 'text-yellow-900'
+              ? 'text-sky-900 dark:text-sky-200'
+              : 'text-yellow-900 dark:text-yellow-200'
       "
     >
       {{ truncatedTitle }}
@@ -170,12 +183,12 @@ console.log('COLOR', props.color)
       :title="item.description"
       :class="
         color === 'blue'
-          ? `text-blue-800`
+          ? `text-blue-800 dark:text-blue-300`
           : color === 'pink'
-            ? 'text-pink-800'
+            ? 'text-pink-800 dark:text-pink-300'
             : color === 'sky'
-              ? 'text-sky-800'
-              : 'text-yellow-800'
+              ? 'text-sky-800 dark:text-sky-300'
+              : 'text-yellow-800 dark:text-yellow-300'
       "
     >
       {{ truncatedDescription }}
@@ -184,20 +197,20 @@ console.log('COLOR', props.color)
       class="text-[40px] font-bold"
       :class="
         color === 'blue'
-          ? `text-blue-900`
+          ? `text-blue-900 dark:text-blue-200`
           : color === 'pink'
-            ? 'text-pink-900'
+            ? 'text-pink-900 dark:text-pink-200'
             : color === 'sky'
-              ? 'text-sky-900'
-              : 'text-yellow-900'
+              ? 'text-sky-900 dark:text-sky-200'
+              : 'text-yellow-900 dark:text-yellow-200'
       "
     >
       ${{ computedPrice }}
     </div>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center gap-2">
       <div class="flex gap-4">
         <div
-          class="bg-[#F5F5F5] dark:bg-slate-800 h-10 rounded-lg flex items-center justify-between w-[120px] px-1"
+          class="bg-[#F5F5F5] dark:bg-slate-800 h-10 rounded-lg flex items-center justify-between w-[90px] lg:w-[120px] px-1"
         >
           <button @click="handleDec" class="text-orange-500"><Minus /></button> {{ count }}
           <button @click="handleInc" class="text-orange-500"><Plus /></button>
@@ -214,7 +227,7 @@ console.log('COLOR', props.color)
           <TooltipTrigger as-child>
             <button
               @click="handleToPage"
-              class="flex gap-4 group/button text-gray-500 text-[20px] items-center"
+              class="flex gap-4 group/button text-gray-500 dark:text-gray-300 text-[20px] items-center"
             >
               <Eye :size="40" class="group-hover/button:scale-110 transition-scale duration-300" />
             </button>

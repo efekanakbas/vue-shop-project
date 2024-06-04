@@ -5,7 +5,10 @@ import RestLayout from '@/layouts/RestLayout.vue'
 const LeftBar = () => import('@/components/side-bars/LeftBar.vue')
 const RightBar = () => import('@/components/side-bars/RightBar.vue')
 import { authRoutes } from '@/routes'
+//@ts-expect-error
 import { isAuthenticated } from '@/apis/auth'
+
+console.log('isAUTH', isAuthenticated())
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
