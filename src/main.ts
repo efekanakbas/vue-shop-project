@@ -6,6 +6,8 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { MotionPlugin } from '@vueuse/motion'
+//@ts-expect-error
+import { i18n } from '@/lib/i18n.ts'
 
 import App from './App.vue'
 import router from './router'
@@ -29,5 +31,6 @@ app.use(router)
 app.use(autoAnimatePlugin)
 app.use(VueQueryPlugin, vueQueryPluginOptions)
 app.use(MotionPlugin)
+app.use(i18n)
 
 app.mount('#app')

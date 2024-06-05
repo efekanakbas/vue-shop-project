@@ -17,6 +17,7 @@ import LoginView from '@/views/auth/LoginView.vue'
 import { ShoppingCart } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { isAuthenticated } from '@/apis/auth'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   fullWidth?: boolean
@@ -35,6 +36,7 @@ const counterStore = useCounterStore()
 
 const { toast } = useToast()
 const isAuth = isAuthenticated()
+const { t } = useI18n()
 
 const handleAdd = async () => {
   if (isAuth) {
@@ -60,8 +62,8 @@ const handlerAddToCart = async () => {
     console.log('error', error)
     toast({
       class: 'border border-red-100 border-[5px]',
-      title: "you can't add any more",
-      description: 'You can add up to 10',
+      title: t('toast.add.title'),
+      description: t('toast.add.desc'),
       duration: 3000
     })
   }
@@ -79,7 +81,7 @@ console.log('isAUTH', isAuth)
     <div>
       <Button @click="handlerAddToCart" :class="props.fullWidth && 'w-full'" class="flex gap-4">
         <figure><ShoppingCart /></figure>
-        Add to cart
+        {{ $t('button.cart') }}
       </Button>
     </div>
   </template>
@@ -93,7 +95,7 @@ console.log('isAUTH', isAuth)
       <DialogTrigger as-child>
         <Button @click="handlerAddToCart" class="flex gap-4">
           <figure><ShoppingCart /></figure>
-          Add to cart
+          {{ $t('button.cart') }}
         </Button>
       </DialogTrigger>
       <DialogContent class="sm:max-w-[425px] bg-red-100 p-0 w-full">
@@ -105,14 +107,14 @@ console.log('isAUTH', isAuth)
       <DrawerTrigger as-child>
         <Button @click="handlerAddToCart" class="flex gap-4">
           <figure><ShoppingCart /></figure>
-          Add to cart
+          {{ $t('button.cart') }}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <GridForm />
         <DrawerFooter class="pt-4 bg-slate-100 dark:bg-slate-900">
           <DrawerClose as-child>
-            <Button variant="outline"> Cancel </Button>
+            <Button variant="outline"> {{ $t('button.cancel') }} </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

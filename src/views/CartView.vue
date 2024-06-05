@@ -25,7 +25,7 @@ import { useMediaQuery } from '@vueuse/core'
 import { Trash2 } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/ui/toast/use-toast'
-
+import { useI18n } from 'vue-i18n'
 //~
 
 //! Reactivity
@@ -39,6 +39,7 @@ const cartTotal = ref(counterStore.total)
 const localArray = ref(counterStore.cart)
 const isDeleting = ref(false)
 const { toast } = useToast()
+const { t } = useI18n()
 //!
 
 //^ Handlers
@@ -65,8 +66,8 @@ const handleReset = () => {
     console.log('denememem')
     toast({
       class: 'border border-red-100 border-[5px]',
-      title: "You can't reset your cart",
-      description: 'You have no product in your cart',
+      title: t('toast.reset.title'),
+      description: t('toast.reset.desc'),
       duration: 3000
     })
   }
@@ -122,15 +123,15 @@ watch(isDeleting, async (newValue) => {
     <main class="basis-2/3 h-full space-y-4">
       <div class="flex justify-between items-center">
         <div>
-          <h1 class="font-bold text-[24px]">Shopping Cart</h1>
+          <h1 class="font-bold text-[24px]">{{ $t('cart.title') }}</h1>
 
           <p>
             <strong>{{ counterStore.cart.length }}</strong>
-            in your cart.
+            {{ $t('cart.subtitle') }}
           </p>
         </div>
         <button @click="handleReset" class="flex gap-2 group cursor-pointer items-center">
-          <p>Delete All</p>
+          <p>{{ $t('button.deleteAll') }}</p>
           <Trash2 class="group-hover:scale-105" />
         </button>
       </div>
@@ -138,11 +139,11 @@ watch(isDeleting, async (newValue) => {
       <Card class="shadow-lg rounded-2xl">
         <CardHeader class="hidden lg:flex">
           <CardTitle class="flex text-[20px] justify-between">
-            <div class="flex basis-[55%]">Product</div>
+            <div class="flex basis-[55%]">{{ $t('cart.left.first') }}</div>
             <div class="flex justify-between basis-[45%]">
-              <div class="">Price</div>
-              <div class="">Quantity</div>
-              <div class="">Total Price</div>
+              <div class="">{{ $t('cart.left.second') }}</div>
+              <div class="">{{ $t('cart.left.third') }}</div>
+              <div class="">{{ $t('cart.left.fourth') }}</div>
             </div>
           </CardTitle>
         </CardHeader>
@@ -151,8 +152,8 @@ watch(isDeleting, async (newValue) => {
             class="scale-95 bg-orange-50 dark:bg-orange-950 mt-2 lg:mt-0"
             v-if="counterStore.cart.length === 0"
           >
-            <AlertTitle>Heads up!</AlertTitle>
-            <AlertDescription> You have no product in your cart. </AlertDescription>
+            <AlertTitle> {{ $t('cart.alert.title') }}</AlertTitle>
+            <AlertDescription> {{ $t('cart.alert.desc') }} </AlertDescription>
           </Alert>
           <CardContent
             v-else
@@ -189,7 +190,7 @@ watch(isDeleting, async (newValue) => {
       >
         <Card class="rounded-2xl">
           <CardHeader>
-            <CardTitle> Calculated Shipping </CardTitle>
+            <CardTitle> {{ $t('cart.right.first.title') }} </CardTitle>
           </CardHeader>
           <CardContent>
             <section class="space-y-4">
@@ -198,15 +199,23 @@ watch(isDeleting, async (newValue) => {
                   :disabled="!counterStore.cart.length"
                   class="bg-slate-100 dark:bg-slate-600"
                 >
-                  <SelectValue placeholder="Select a country" />
+                  <SelectValue :placeholder="$t('cart.right.first.select.placeholder')" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Countries</SelectLabel>
-                    <SelectItem value="apple"> Turkiye </SelectItem>
-                    <SelectItem value="azerbaijan"> Azerbaijan </SelectItem>
-                    <SelectItem value="uzbekistan"> Uzbekistan </SelectItem>
-                    <SelectItem value="kazakhistan"> Kazakhistan </SelectItem>
+                    <SelectLabel>{{ $t('cart.right.first.select.heading') }}</SelectLabel>
+                    <SelectItem :value="$t('cart.right.first.select.first')">
+                      {{ $t('cart.right.first.select.first') }}
+                    </SelectItem>
+                    <SelectItem :value="$t('cart.right.first.title')">
+                      {{ $t('cart.right.first.select.second') }}
+                    </SelectItem>
+                    <SelectItem :value="$t('cart.right.first.title')">
+                      {{ $t('cart.right.first.select.third') }}
+                    </SelectItem>
+                    <SelectItem :value="$t('cart.right.first.title')">
+                      {{ $t('cart.right.first.select.fourth') }}
+                    </SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -216,13 +225,17 @@ watch(isDeleting, async (newValue) => {
                     :disabled="!counterStore.cart.length"
                     class="bg-slate-100 dark:bg-slate-600"
                   >
-                    <SelectValue placeholder="User type" />
+                    <SelectValue :placeholder="$t('cart.right.first.select.placeholder')" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Types</SelectLabel>
-                      <SelectItem value="person"> Person </SelectItem>
-                      <SelectItem value="company"> Company </SelectItem>
+                      <SelectLabel> {{ $t('cart.right.first.type.heading') }}</SelectLabel>
+                      <SelectItem :value="$t('cart.right.first.select.first')">
+                        {{ $t('cart.right.first.type.first') }}
+                      </SelectItem>
+                      <SelectItem :value="$t('cart.right.first.select.second')">
+                        {{ $t('cart.right.first.type.second') }}
+                      </SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -231,55 +244,55 @@ watch(isDeleting, async (newValue) => {
                   class="bg-slate-100 dark:bg-slate-600"
                   :disabled="!counterStore.cart.length"
                   type="text"
-                  placeholder="ZIP code"
+                  :placeholder="$t('cart.right.first.zip')"
                 />
               </div>
               <Button
                 :disabled="!counterStore.cart.length"
                 variant="outline"
                 class="bg-slate-100 dark:bg-slate-600 w-full hover:bg-slate-200 dark:hover:bg-slate-700"
-                >Update</Button
+                >{{ $t('button.update') }}</Button
               >
             </section>
             <Separator class="my-7" />
             <section class="space-y-4">
-              <CardTitle> Coupon Code </CardTitle>
+              <CardTitle> {{ $t('cart.right.second.title') }} </CardTitle>
               <p class="text-gray-500 dark:text-gray-300">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, odit.
               </p>
               <Input
                 :disabled="!counterStore.cart.length"
-                placeholder="Coupon Code "
+                :placeholder="$t('cart.right.second.placeholder')"
                 v-model="coupon"
               />
-              <Button :disabled="!counterStore.cart.length" variant="outline" class="w-full"
-                >Aplly</Button
-              >
+              <Button :disabled="!counterStore.cart.length" variant="outline" class="w-full">
+                {{ $t('button.apply') }}
+              </Button>
             </section>
             <Separator class="my-7" />
             <section class="bg-orange-200 dark:bg-orange-950 p-4 rounded-2xl space-y-4">
-              <CardTitle> Cart Total </CardTitle>
+              <CardTitle> {{ $t('cart.right.third.title') }} </CardTitle>
               <div class="text-[14px]">
                 <div class="flex justify-between">
-                  <p>Card Subtotal</p>
+                  <p>{{ $t('cart.right.third.first') }}</p>
                   <p :class="coupon ? 'line-through text-gray-500' : ''">
                     ${{ parseFloat(cartTotal.toFixed(2)) }}
                   </p>
                 </div>
                 <div class="flex justify-between">
-                  <p>Country</p>
+                  <p>{{ $t('cart.right.third.second') }}</p>
                   <p>
                     {{ model ? model : '-' }}
                   </p>
                 </div>
                 <div class="flex justify-between">
-                  <p>Discount</p>
+                  <p>{{ $t('cart.right.third.third') }}</p>
                   <p :class="coupon ? 'text-gray-500' : 'text-gray-900'">
                     {{ coupon ? '-$10.00' : '-' }}
                   </p>
                 </div>
                 <div class="flex justify-between">
-                  <p class="font-bold">Card Total</p>
+                  <p class="font-bold">{{ $t('cart.right.third.fourth') }}</p>
                   <p class="text-orange-500 font-bold scale-125 underline">
                     ${{
                       coupon
@@ -289,9 +302,9 @@ watch(isDeleting, async (newValue) => {
                   </p>
                 </div>
               </div>
-              <Button :disabled="!counterStore.cart.length" @click="handleBuy" class="w-full"
-                >Buy it!</Button
-              >
+              <Button :disabled="!counterStore.cart.length" @click="handleBuy" class="w-full">{{
+                $t('button.buy')
+              }}</Button>
             </section>
           </CardContent>
         </Card>

@@ -49,7 +49,9 @@ const {
   <template v-else>
     <div v-motion-fade class="h-full flex flex-col space-y-6">
       <header class="text-[32px] font-bold flex justify-center">
-        <h1 role="heading" class="border py-2 px-20 rounded-full">Men</h1>
+        <h1 role="heading" class="border py-2 px-20 rounded-full">
+          {{ $t('category.men.heading') }}
+        </h1>
       </header>
 
       <Card

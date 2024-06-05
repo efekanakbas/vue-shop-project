@@ -167,7 +167,7 @@ onUnmounted(() => {
           <h1
             class="text-[20px] bg-white dark:text-white w-[140px] h-[40px] flex justify-center items-center rounded-lg dark:bg-slate-900"
           >
-            Clothings!
+            {{ $t('homePage.first.heading') }}
           </h1>
         </div>
         <ResizablePanelGroup
@@ -188,7 +188,9 @@ onUnmounted(() => {
           direction="horizontal"
         >
           <ResizablePanel ref="el" class="bg-blue-100 dark:bg-blue-950 overflow-auto">
-            <h1 class="text-[40px] text-blue-600 text-center">Man</h1>
+            <h1 class="text-[40px] text-blue-600 text-center">
+              {{ $t('homePage.first.subheading.first.title') }}
+            </h1>
             <Separator class="bg-blue-300" />
             <ScrollArea style="height: calc(100% - 60px)" class="w-full rounded-md px-4">
               <ul class="flex gap-4 flex-wrap py-4">
@@ -228,7 +230,9 @@ onUnmounted(() => {
                       />
                     </CardContent>
                     <Separator />
-                    <CardFooter class="p-3 flex justify-center"> {{ item.category }} </CardFooter>
+                    <CardFooter class="p-3 flex justify-center">
+                      {{ $t('homePage.first.subheading.first.subtitle') }}
+                    </CardFooter>
                   </Card>
                 </li>
               </ul>
@@ -236,7 +240,9 @@ onUnmounted(() => {
           </ResizablePanel>
           <ResizableHandle with-handle />
           <ResizablePanel class="bg-pink-100 dark:bg-pink-950 overflow-auto">
-            <h1 class="text-[40px] text-pink-600 text-center">Woman</h1>
+            <h1 class="text-[40px] text-pink-600 text-center">
+              {{ $t('homePage.first.subheading.second.title') }}
+            </h1>
             <Separator class="bg-pink-300" />
             <ScrollArea style="height: calc(100% - 60px)" class="w-full rounded-md px-4">
               <ul class="flex gap-4 flex-wrap py-4 flex-row-reverse">
@@ -276,7 +282,9 @@ onUnmounted(() => {
                       />
                     </CardContent>
                     <Separator />
-                    <CardFooter class="p-3 flex justify-center"> {{ item.category }} </CardFooter>
+                    <CardFooter class="p-3 flex justify-center">
+                      {{ $t('homePage.first.subheading.second.subtitle') }}
+                    </CardFooter>
                   </Card>
                 </li>
               </ul>
@@ -301,7 +309,7 @@ onUnmounted(() => {
           <h1
             class="overflow-hidden text-blue-900 dark:text-white opacity-80 p-4 z-10 text-[20px] font-bold"
           >
-            Electronics!
+            {{ $t('homePage.second.title') }}
             <div class="sparkles absolute inset-0 z-10"></div>
           </h1>
         </div>
@@ -312,7 +320,7 @@ onUnmounted(() => {
           <h1
             class="text-[20px] w-[140px] h-[40px] flex justify-center items-center rounded-lg text-yellow-950 bg-yellow-400 dark:bg-yellow-950 dark:text-yellow-400"
           >
-            Jewelery!
+            {{ $t('homePage.third.title') }}
           </h1>
         </div>
         <MyCarousel :data="jeweleryData" />

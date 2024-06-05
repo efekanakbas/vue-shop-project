@@ -102,7 +102,15 @@ onMounted(() => {
         <div class="hidden lg:flex flex-col justify-evenly">
           <div class="flex flex-col">
             <h3 class="text-gray-500 dark:text-gray-300 text-[14px] uppercase px-3">
-              {{ item.category }}
+              {{
+                item.category === "men's clothing"
+                  ? $t('category.men.subheading')
+                  : item.category === "women's clothing"
+                    ? $t('category.women.subheading')
+                    : item.category === 'electronics'
+                      ? $t('category.electronics.subheading')
+                      : $t('category.jewelery.subheading')
+              }}
             </h3>
             <p
               :title="item.title"

@@ -87,7 +87,9 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
               <CardFooter class="p-3 flex justify-center">
                 {{
                   //@ts-expect-error
-                  item.category
+                  item.category === 'electronics'
+                    ? $t('homePage.second.subtitle')
+                    : $t('homePage.third.subtitle')
                 }}
               </CardFooter>
             </Card>

@@ -12,6 +12,7 @@ import { useToast } from '@/components/ui/toast/use-toast'
 import { useMediaQuery } from '@vueuse/core'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useDark } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 
 const DialogDrawer = defineAsyncComponent({
   loader: () => import('@/components/DialogDrawer.vue'),
@@ -68,6 +69,7 @@ const { toast } = useToast()
 const isDesktop = useMediaQuery('(min-width: 1024px)')
 const router = useRouter()
 const isDark = useDark()
+const { t } = useI18n()
 //!
 
 //^ Handlers
@@ -75,8 +77,8 @@ const handleInc = () => {
   if (count.value > 9) {
     toast({
       class: 'border border-red-100 border-[5px]',
-      title: "You can't increase it any more",
-      description: 'You can increase up to 10',
+      title: t('toast.inc.title'),
+      description: t('toast.inc.desc'),
       duration: 3000
     })
   } else {
@@ -149,7 +151,15 @@ console.log('COLOR', props.color)
                 : 'text-yellow-800 dark:text-yellow-300'
         "
       >
-        {{ item.category }}
+        {{
+          item.category === "men's clothing"
+            ? $t('category.men.subheading')
+            : item.category === "women's clothing"
+              ? $t('category.women.subheading')
+              : item.category === 'electronics'
+                ? $t('category.electronics.subheading')
+                : $t('category.jewelery.subheading')
+        }}
       </h4>
       <StarRating
         :glow="!isDark ? 3 : 0"
@@ -233,7 +243,7 @@ console.log('COLOR', props.color)
             </button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>To Product Page</p>
+            <p>{{ $t('category.tooltip') }}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

@@ -7,6 +7,7 @@ import { Plus, Minus } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { LoaderCircle } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
 
 // Makros
 const props = defineProps<{
@@ -23,6 +24,7 @@ const computedPrice = computed(() => {
   const price = data.value.price * count.value
   return parseFloat(price.toFixed(2))
 })
+const { t } = useI18n()
 //!
 
 //^ Handlers
@@ -30,8 +32,8 @@ const handleInc = () => {
   if (count.value > 9) {
     toast({
       class: 'border border-red-100 border-[5px]',
-      title: "You can't increase it any more",
-      description: 'You can increase up to 10',
+      title: t('toast.inc.title'),
+      description: t('toast.inc.desc'),
       duration: 3000
     })
   } else {
@@ -82,7 +84,17 @@ const { data, isLoading, isFetching } = handleQuery('product', `products/${props
       </div>
       <ScrollArea class="basis-7/12 py-20 px-4">
         <div class="flex flex-col justify-center space-y-10">
-          <h1 class="uppercase text-gray-600 font-bold dark:text-gray-300">{{ data.category }}</h1>
+          <h1 class="uppercase text-gray-600 font-bold dark:text-gray-300">
+            {{
+              data.category === "men's clothing"
+                ? $t('category.men.subheading')
+                : data.category === "women's clothing"
+                  ? $t('category.women.subheading')
+                  : data.category === 'electronics'
+                    ? $t('category.electronics.subheading')
+                    : $t('category.jewelery.subheading')
+            }}
+          </h1>
           <h3 class="text-[40px] font-extrabold">{{ data.title }}</h3>
           <p class="text-gray-600 dark:text-gray-300">
             {{ data.description }}

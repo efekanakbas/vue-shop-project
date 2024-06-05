@@ -70,59 +70,61 @@ const touchedConfirm = useIsFieldTouched('confirm')
   <div class="flex justify-center items-center h-full overflow-hidden">
     <Card class="w-full lg:w-2/5">
       <CardHeader class="flex justify-center w-full bg-slate-100 dark:bg-slate-900 rounded-t-lg">
-        <CardTitle class="mx-auto text-orange-500">Register Form</CardTitle>
-        <CardDescription class="mx-auto text-orange-400"
-          >Register for dive into productions</CardDescription
-        >
+        <CardTitle class="mx-auto text-orange-500">{{ $t('auth.register.title') }}</CardTitle>
+        <CardDescription class="mx-auto text-orange-400">{{
+          $t('auth.register.subtitle')
+        }}</CardDescription>
       </CardHeader>
       <CardContent class="p-0 rounded-t-sm h-[400px] lg:h-[673px]">
         <ScrollArea class="h-full shadow-none rounded-b-lg">
           <form class="space-y-6 bg-orange-100 dark:bg-orange-950 p-7 pb-5" @submit="onSubmit">
             <FormField v-slot="{ componentField }" name="username">
               <FormItem v-auto-animate>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>{{ $t('auth.register.username.title') }}</FormLabel>
                 <FormControl>
                   <Input type="text" placeholder="Username" v-bind="componentField" />
                 </FormControl>
-                <FormDescription> You have to type username here </FormDescription>
+                <FormDescription>
+                  {{ $t('auth.register.username.bottomMessage') }}
+                </FormDescription>
                 <FormMessage v-if="touchedUsername" />
               </FormItem>
             </FormField>
             <FormField v-slot="{ componentField }" name="email">
               <FormItem v-auto-animate>
-                <FormLabel>E-Mail</FormLabel>
+                <FormLabel>{{ $t('auth.email.title') }}</FormLabel>
                 <FormControl>
                   <Input type="text" placeholder="E-mail" v-bind="componentField" />
                 </FormControl>
-                <FormDescription> You have to type E-mail here </FormDescription>
+                <FormDescription> {{ $t('auth.email.bottomMessage') }} </FormDescription>
                 <FormMessage v-if="touchedEmail" />
               </FormItem>
             </FormField>
             <FormField v-slot="{ componentField }" name="password">
               <FormItem v-auto-animate>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{{ $t('auth.password.title') }}</FormLabel>
                 <FormControl>
                   <Input type="password" placeholder="******" v-bind="componentField" />
                 </FormControl>
-                <FormDescription> You have to type password here. </FormDescription>
+                <FormDescription> {{ $t('auth.password.bottomMessage') }} </FormDescription>
                 <FormMessage v-if="touchedPassword" />
               </FormItem>
             </FormField>
             <FormField v-slot="{ componentField }" name="confirm">
               <FormItem v-auto-animate>
-                <FormLabel>Confirm</FormLabel>
+                <FormLabel>{{ $t('auth.register.confirm.title') }}</FormLabel>
                 <FormControl>
                   <Input type="password" placeholder="******" v-bind="componentField" />
                 </FormControl>
-                <FormDescription> You have to type confirm here. </FormDescription>
+                <FormDescription> {{ $t('auth.register.confirm.bottomMessage') }} </FormDescription>
                 <FormMessage v-if="touchedConfirm" />
               </FormItem>
             </FormField>
             <div class="space-y-6">
-              <Button type="submit" class="w-full"> Submit </Button>
+              <Button type="submit" class="w-full"> {{ $t('button.submit') }} </Button>
               <Separator class="dark:bg-white translate-y-2" />
               <Button as-child class="w-full dark:text-white" type="button" variant="link">
-                <RouterLink to="/auth/login"> You are already cool? </RouterLink>
+                <RouterLink to="/auth/login"> {{ $t('auth.register.link') }}</RouterLink>
               </Button>
             </div>
           </form>

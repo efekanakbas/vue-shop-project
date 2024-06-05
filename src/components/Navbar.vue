@@ -27,13 +27,23 @@ import {
   SheetTrigger
 } from '@/components/ui/sheet'
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
+
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { useCounterStore } from '@/stores/counter'
 import { isAuthenticated } from '@/apis/auth.js'
 import { useDarkStore } from '@/stores/dark'
 //@ts-expect-error
-import { supabase } from '@/lib/supabaseClient'
+import { supabase } from '@/lib/supabaseClient.ts'
 // Makros
 
 //
@@ -64,9 +74,7 @@ const handleLogout = async () => {
     await supabase.auth.signOut()
     counterStore.$reset()
     localStorage.removeItem('loggedIn')
-    router.push({ name: 'home' })
 
-    // Sayfayı yenilemek için
     window.location.reload()
   } catch (error: any) {
     console.error('Çıkış yapılırken bir hata oluştu:', error.message)
@@ -113,31 +121,34 @@ const handleSheet = () => {
               </RouterLink>
             </SheetTitle>
             <SheetDescription class="dark:text-white flex justify-center">
-              You can buy anything you want!
+              {{ $t('navbar.seventh') }}
             </SheetDescription>
           </SheetHeader>
           <Separator class="my-6" />
-          <h1 class="font-bold mb-6 text-[32px]">Categories</h1>
+          <h1 class="font-bold mb-6 text-[32px]">{{ $t('navbar.sixth') }}</h1>
           <div class="flex flex-col gap-6 text-gray-600 dark:text-white text-[24px]">
-            <RouterLink @click="handleSheet" activeClass=" text-[#F97316]" to="/category/men"
-              >Men</RouterLink
+            <RouterLink @click="handleSheet" activeClass=" text-[#F97316]" to="/category/men">
+              {{ $t('navbar.first') }}</RouterLink
             >
-            <RouterLink @click="handleSheet" activeClass=" text-[#F97316]" to="/category/women"
-              >Women</RouterLink
-            >
+            <RouterLink @click="handleSheet" activeClass=" text-[#F97316]" to="/category/women">{{
+              $t('navbar.second')
+            }}</RouterLink>
             <RouterLink
               @click="handleSheet"
               activeClass=" text-[#F97316]"
               to="/category/electronics"
-              >Electronics</RouterLink
+              >{{ $t('navbar.third') }}</RouterLink
             >
-            <RouterLink @click="handleSheet" activeClass=" text-[#F97316]" to="/category/jewelery"
-              >Jewelery</RouterLink
+            <RouterLink
+              @click="handleSheet"
+              activeClass=" text-[#F97316]"
+              to="/category/jewelery"
+              >{{ $t('navbar.fourth') }}</RouterLink
             >
           </div>
           <SheetFooter class="absolute bottom-6 w-full px-6 left-0">
             <SheetClose as-child>
-              <Button type="button" class="mx-auto"> Close </Button>
+              <Button type="button" class="mx-auto"> {{ $t('navbar.fifth') }} </Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>
@@ -157,20 +168,23 @@ const handleSheet = () => {
         </h1></RouterLink
       >
       <div class="hidden gap-20 items-center lg:flex justify-center">
-        <RouterLink class="w-[34px]" activeClass=" text-[#F97316] font-bold" to="/category/men"
-          >Men</RouterLink
-        >
-        <RouterLink class="w-[59px]" activeClass=" text-[#F97316] font-bold" to="/category/women"
-          >Women</RouterLink
-        >
+        <RouterLink class="w-[34px]" activeClass=" text-[#F97316] font-bold" to="/category/men">{{
+          $t('navbar.first')
+        }}</RouterLink>
+        <RouterLink class="w-[59px]" activeClass=" text-[#F97316] font-bold" to="/category/women">{{
+          $t('navbar.second')
+        }}</RouterLink>
         <RouterLink
           class="w-[80px]"
           activeClass=" text-[#F97316] font-bold"
           to="/category/electronics"
-          >Electronics</RouterLink
+          >{{ $t('navbar.third') }}</RouterLink
         >
-        <RouterLink class="w-[67px]" activeClass=" text-[#F97316] font-bold" to="/category/jewelery"
-          >Jewelery</RouterLink
+        <RouterLink
+          class="w-[67px]"
+          activeClass=" text-[#F97316] font-bold"
+          to="/category/jewelery"
+          >{{ $t('navbar.fourth') }}</RouterLink
         >
       </div>
 
@@ -197,6 +211,25 @@ const handleSheet = () => {
           <span class="sr-only">Toggle theme</span>
         </Button>
 
+        <Select v-model="$i18n.locale">
+          <SelectTrigger class="w-[56px] h-[36px]">
+            <SelectValue class="capitalize">{{ $i18n.locale }}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <!-- <SelectLabel>Fruits</SelectLabel> -->
+              <SelectItem
+                class="capitalize"
+                v-for="locale in $i18n.availableLocales"
+                :key="`locale-${locale}`"
+                :value="locale"
+              >
+                {{ locale }}
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
         <Button class="w-12" v-if="isAuth" as-child variant="secondary" size="sm">
           <RouterLink aria-label="Cart page" to="/cart" class="relative">
             <ShoppingCart />
@@ -219,20 +252,20 @@ const handleSheet = () => {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent class="w-40">
-            <DropdownMenuLabel>Auth</DropdownMenuLabel>
+            <DropdownMenuLabel>{{ $t('navbar.auth.first') }}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup v-if="!isAuth">
               <DropdownMenuItem as-child class="cursor-pointer">
-                <RouterLink :to="{ name: 'login' }">Login</RouterLink>
+                <RouterLink :to="{ name: 'login' }">{{ $t('navbar.auth.second') }}</RouterLink>
               </DropdownMenuItem>
               <DropdownMenuItem as-child class="cursor-pointer">
-                <RouterLink :to="{ name: 'register' }">Register</RouterLink>
+                <RouterLink :to="{ name: 'register' }">{{ $t('navbar.auth.third') }}</RouterLink>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuGroup v-else-if="isAuth">
               <DropdownMenuItem role="button" @click="handleLogout" class="cursor-pointer">
                 <LogOut class="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                <span>{{ $t('navbar.auth.fourth') }}</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

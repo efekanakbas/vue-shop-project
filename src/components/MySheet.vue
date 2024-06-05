@@ -139,18 +139,18 @@ watch(isDeleting, async (newValue) => {
             ></SheetTitle
           >
           <SheetDescription class="dark:text-white flex justify-center">
-            You can buy anything you want!
+            {{ $t('navbar.seventh') }}
           </SheetDescription>
         </SheetHeader>
         <Separator class="my-6" />
         <div class="flex justify-between items-center mb-6">
           <h1 class="font-bold text-[24px] lg:text-[32px] flex items-center whitespace-nowrap">
-            Your Cart
+            {{ $t('sheet.heading') }}
           </h1>
 
           <SheetClose as-child>
             <button @click="handleReset" class="flex text-gray-600 gap-1 group">
-              <p class="whitespace-nowrap">Delete All</p>
+              <p class="whitespace-nowrap">{{ $t('button.deleteAll') }}</p>
               <Trash2 class="group-hover:scale-105" />
             </button>
           </SheetClose>
@@ -214,7 +214,7 @@ watch(isDeleting, async (newValue) => {
         <!-- </SheetClose> -->
         <SheetFooter class="absolute bottom-6 w-full px-6 left-0">
           <SheetClose as-child>
-            <Button type="button" class="mx-auto"> Close </Button>
+            <Button type="button" class="mx-auto"> {{ $t('button.close') }} </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

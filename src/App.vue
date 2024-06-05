@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import { RouterView } from 'vue-router'
 import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { useDark } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n()
 
 useDark({
   selector: 'body',
@@ -10,6 +14,10 @@ useDark({
   valueDark: 'dark',
   valueLight: 'light',
   disableTransition: false
+})
+
+watch(locale, (newVal) => {
+  localStorage.setItem('last-locale', newVal)
 })
 </script>
 
