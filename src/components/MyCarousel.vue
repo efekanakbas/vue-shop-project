@@ -83,13 +83,17 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                   "
                 />
               </CardContent>
-              <Separator />
-              <CardFooter class="p-3 flex justify-center">
+
+              <CardFooter
+                :title="
+                  //@ts-expect-error
+                  item.title
+                "
+                class="p-3 flex justify-center"
+              >
                 {{
                   //@ts-expect-error
-                  item.category === 'electronics'
-                    ? $t('homePage.second.subtitle')
-                    : $t('homePage.third.subtitle')
+                  item.title.length > 20 ? item.title.substring(0, 20) + '...' : item.title
                 }}
               </CardFooter>
             </Card>

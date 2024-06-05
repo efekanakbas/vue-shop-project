@@ -24,6 +24,7 @@ const el = ref(null)
 const widthValue = ref(isDesktop.value ? 679 : 180)
 const coloredDiv2 = ref<HTMLElement | null>(null)
 const darkStore = useDarkStore()
+
 //!
 
 //^ Handlers
@@ -231,7 +232,9 @@ onUnmounted(() => {
                     </CardContent>
                     <Separator />
                     <CardFooter class="p-3 flex justify-center">
-                      {{ $t('homePage.first.subheading.first.subtitle') }}
+                      {{
+                        item.title.length > 15 ? item.title.substring(0, 15) + '...' : item.title
+                      }}
                     </CardFooter>
                   </Card>
                 </li>
@@ -282,8 +285,10 @@ onUnmounted(() => {
                       />
                     </CardContent>
                     <Separator />
-                    <CardFooter class="p-3 flex justify-center">
-                      {{ $t('homePage.first.subheading.second.subtitle') }}
+                    <CardFooter :title="item.title" class="p-3 flex justify-center">
+                      {{
+                        item.title.length > 15 ? item.title.substring(0, 15) + '...' : item.title
+                      }}
                     </CardFooter>
                   </Card>
                 </li>
