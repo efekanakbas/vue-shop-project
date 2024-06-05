@@ -162,6 +162,14 @@ export const i18n = createI18n({
         add: {
           title: "You can't add any more",
           desc: 'You can add up to 10'
+        },
+        register: {
+          title: "You can't register",
+          desc: 'This E-mail is used'
+        },
+        login: {
+          title: "You can't login",
+          desc: 'E-mail or password is wrong'
         }
       }
     },
@@ -315,6 +323,14 @@ export const i18n = createI18n({
         add: {
           title: 'Daha fazla ekleyemezsiniz',
           desc: 'En fazla 10 ürün ekleyebilirsiniz'
+        },
+        register: {
+          title: 'Kayıt olamazsınız',
+          desc: 'Bu E-posta kullanılıyor'
+        },
+        login: {
+          title: 'Giriş yapamadınız',
+          desc: 'E-posta veya parola hatalı'
         }
       }
     }

@@ -29,7 +29,7 @@ const darkStore = useDarkStore()
 //^ Handlers
 
 const updateBackgroundColor = (widthValue: number) => {
-  const maxColor = [0, 0, 255] // Mavi (RGB)
+  const maxColor = [102, 178, 255] // Mavi (RGB)
   const minColor = [255, 192, 203] // Pembe (RGB)
 
   const interpolateColor = (start: any, end: number, factor: any) =>

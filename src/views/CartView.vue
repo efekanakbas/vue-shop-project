@@ -26,6 +26,7 @@ import { Trash2 } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { useI18n } from 'vue-i18n'
+import { type UseDraggableReturn, VueDraggable } from 'vue-draggable-plus'
 //~
 
 //! Reactivity
@@ -40,6 +41,8 @@ const localArray = ref(counterStore.cart)
 const isDeleting = ref(false)
 const { toast } = useToast()
 const { t } = useI18n()
+const el = ref<UseDraggableReturn>()
+const isUpdating = ref(false)
 //!
 
 //^ Handlers
@@ -79,6 +82,14 @@ const totalHandleInc = (value: number) => {
 
 const totalHandleDec = (value: number) => {
   cartTotal.value -= value
+}
+
+const onStart = () => {
+  isUpdating.value = true
+}
+
+const onUpdate = () => {
+  isUpdating.value = false
 }
 //^
 
@@ -155,30 +166,35 @@ watch(isDeleting, async (newValue) => {
             <AlertTitle> {{ $t('cart.alert.title') }}</AlertTitle>
             <AlertDescription> {{ $t('cart.alert.desc') }} </AlertDescription>
           </Alert>
-          <CardContent
-            v-else
-            class="py-4"
-            v-for="(item, index) in localArray"
-            :key="
-              //@ts-ignore
-              item.id
-            "
-          >
-            <CartViewItem
-              :handleIsDeletingChange="handleIsDeletingChange"
-              :cartTotal="cartTotal"
-              :totalHandleInc="totalHandleInc"
-              :totalHandleDec="totalHandleDec"
-              :item="item"
-            />
-
-            <Separator
-              class="mt-5 h-[2px]"
-              v-if="
-                Number(counterStore.cart.length) === 1 ||
-                index !== Number(counterStore.cart.length) - 1
-              "
-            />
+          <CardContent v-else class="py-4">
+            <ul>
+              <VueDraggable
+                ref="el"
+                v-model="localArray"
+                :animation="150"
+                ghostClass="ghost"
+                class="flex flex-col gap-5"
+                @start="onStart"
+                @update="onUpdate"
+              >
+                <li
+                  class="shadow-md p-2 rounded-md cursor-move"
+                  v-for="item in localArray"
+                  :key="
+                    //@ts-ignore
+                    item.id
+                  "
+                >
+                  <CartViewItem
+                    :handleIsDeletingChange="handleIsDeletingChange"
+                    :cartTotal="cartTotal"
+                    :totalHandleInc="totalHandleInc"
+                    :totalHandleDec="totalHandleDec"
+                    :item="item"
+                  />
+                </li>
+              </VueDraggable>
+            </ul>
           </CardContent>
         </ScrollArea>
       </Card>

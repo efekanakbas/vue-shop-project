@@ -120,7 +120,7 @@ console.log('COLOR', props.color)
   <CardHeader
     class="basis-2/5 rounded-lg transform transition-transform duration-200 group-hover:scale-105"
   >
-    <figure class="h-[200px] lg:h-full">
+    <figure @click="handleToPage" class="h-[200px] lg:h-full cursor-pointer">
       <img
         class="object-contain w-full h-full bg-white rounded-lg"
         :src="item.image"

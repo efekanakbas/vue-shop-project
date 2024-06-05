@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 //~ Imports
+import { useRouter } from 'vue-router'
 import { useForm, useIsFieldTouched } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
@@ -19,10 +20,17 @@ import { Separator } from '@/components/ui/separator'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ScrollArea } from '@/components/ui/scroll-area'
+//@ts-expect-error
+import { supabase } from '@/lib/supabaseClient.ts'
+import { useToast } from '@/components/ui/toast/use-toast'
+import { useI18n } from 'vue-i18n'
 //~
 
 //! Reactivity
+const router = useRouter()
 const max = 'You can type max 20 characters'
+const { toast } = useToast()
+const { t } = useI18n()
 const formSchema = toTypedSchema(
   z
     .object({
@@ -43,14 +51,37 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 
-const onSubmit = handleSubmit((values) => {
-  window.alert(values)
+const onSubmit = handleSubmit(async (values) => {
+  await signUpNewUser(values.email, values.password)
 })
 
 const touchedUsername = useIsFieldTouched('username')
 const touchedEmail = useIsFieldTouched('email')
 const touchedPassword = useIsFieldTouched('password')
 const touchedConfirm = useIsFieldTouched('confirm')
+
+async function signUpNewUser(email: string, password: string) {
+  try {
+    const { error } = await supabase.auth.signUp({
+      email: email,
+      password: password
+    })
+    if (error) {
+      toast({
+        class: 'border border-red-100 border-[5px]',
+        title: t('toast.register.title'),
+        description: t('toast.register.desc'),
+        duration: 3000
+      })
+      console.log('PROBLEM VAR', error)
+    } else {
+      router.push({ name: 'login' })
+    }
+  } catch (error) {
+    console.log('error', error)
+  }
+}
+
 //^
 
 //& Routes
@@ -77,7 +108,10 @@ const touchedConfirm = useIsFieldTouched('confirm')
       </CardHeader>
       <CardContent class="p-0 rounded-t-sm h-[400px] lg:h-[673px]">
         <ScrollArea class="h-full shadow-none rounded-b-lg">
-          <form class="space-y-6 bg-orange-100 dark:bg-orange-950 p-7 pb-5" @submit="onSubmit">
+          <form
+            class="space-y-6 bg-orange-100 dark:bg-orange-950 p-7 pb-5"
+            @submit.prevent="onSubmit"
+          >
             <FormField v-slot="{ componentField }" name="username">
               <FormItem v-auto-animate>
                 <FormLabel>{{ $t('auth.register.username.title') }}</FormLabel>

@@ -24,6 +24,8 @@ import { useRouter } from 'vue-router'
 //@ts-expect-error
 import { supabase } from '@/lib/supabaseClient.ts'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { useToast } from '@/components/ui/toast/use-toast'
+import { useI18n } from 'vue-i18n'
 
 const isModal = defineProps<{
   width: string
@@ -34,6 +36,8 @@ const isModal = defineProps<{
 //! Reactivity
 const max = 'You can type max 20 characters'
 const min = 'You can type min 2 characters'
+const { toast } = useToast()
+const { t } = useI18n()
 const formSchema = toTypedSchema(
   z.object({
     email: z.string().min(2, min).max(50).email('You have to type a valid email'),
@@ -50,18 +54,8 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 
-const handleLogin = () => {
-  localStorage.setItem('loggedIn', 'true')
-  if (isModal.width) {
-    isModal.handleClose()
-    window.location.reload()
-  } else {
-    router.push({ name: 'home' })
-  }
-}
-
-const onSubmit = handleSubmit(() => {
-  handleLogin()
+const onSubmit = handleSubmit(async (values) => {
+  await signInWithEmail(values.email, values.password)
 })
 
 const touchedEmail = useIsFieldTouched('email')
@@ -108,6 +102,35 @@ const signInWithGitHub = async () => {
     }
   } catch (error: any) {
     console.error('Bir hata oluştu:', error.message)
+  }
+}
+
+async function signInWithEmail(email: string, password: string) {
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    })
+
+    if (error) {
+      toast({
+        class: 'border border-red-100 border-[5px]',
+        title: t('toast.login.title'),
+        description: t('toast.login.desc'),
+        duration: 3000
+      })
+      console.log('error', error)
+    } else {
+      localStorage.setItem('loggedIn', 'true')
+      if (isModal.width) {
+        isModal.handleClose()
+        window.location.reload()
+      } else {
+        router.push({ name: 'home' })
+      }
+    }
+  } catch (error) {
+    throw new Error('Giriş yapılırken bir hata oluştu.')
   }
 }
 
