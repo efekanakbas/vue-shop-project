@@ -5,10 +5,8 @@ import RestLayout from '@/layouts/RestLayout.vue'
 const LeftBar = () => import('@/components/side-bars/LeftBar.vue')
 const RightBar = () => import('@/components/side-bars/RightBar.vue')
 import { authRoutes } from '@/routes'
-//@ts-expect-error
-import { isAuthenticated } from '@/apis/auth'
 
-console.log('isAUTH', isAuthenticated())
+import { isAuthenticated } from '@/apis/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,6 +51,14 @@ const router = createRouter({
       component: HomeView,
       meta: {
         layout: RestLayout
+      },
+      beforeEnter: (to, from, next) => {
+        if (to.query.error) {
+          localStorage.removeItem('loggedIn')
+          next({ name: 'login' })
+        } else {
+          next()
+        }
       }
     },
     {

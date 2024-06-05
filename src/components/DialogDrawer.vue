@@ -12,10 +12,11 @@ import {
 } from '@/components/ui/drawer'
 
 import { useCounterStore } from '@/stores/counter'
-import { useAuthStore } from '@/stores/auth'
+
 import LoginView from '@/views/auth/LoginView.vue'
 import { ShoppingCart } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
+import { isAuthenticated } from '@/apis/auth'
 
 const props = defineProps<{
   fullWidth?: boolean
@@ -31,11 +32,12 @@ const isDesktop = useMediaQuery('(min-width: 1024px)')
 
 const isOpen = ref(false)
 const counterStore = useCounterStore()
-const authStore = useAuthStore()
+
 const { toast } = useToast()
+const isAuth = isAuthenticated()
 
 const handleAdd = async () => {
-  if (authStore.isLogged) {
+  if (isAuth) {
     const itemExists = counterStore.cart.some((el) => {
       //@ts-expect-error
       return el.id == props.itemID
@@ -68,10 +70,12 @@ const handlerAddToCart = async () => {
 const handleClose = () => {
   isOpen.value = false
 }
+
+console.log('isAUTH', isAuth)
 </script>
 
 <template>
-  <template v-if="authStore.isLogged">
+  <template v-if="isAuth">
     <div>
       <Button @click="handlerAddToCart" :class="props.fullWidth && 'w-full'" class="flex gap-4">
         <figure><ShoppingCart /></figure>
@@ -80,7 +84,7 @@ const handleClose = () => {
     </div>
   </template>
 
-  <template v-else-if="!authStore.isLogged">
+  <template v-else-if="!isAuth">
     <UseTemplate>
       <LoginView width="w-full" :handleClose="handleClose" />
     </UseTemplate>

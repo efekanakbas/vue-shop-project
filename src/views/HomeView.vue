@@ -15,6 +15,7 @@ import { useDarkStore } from '@/stores/dark'
 import { useMediaQuery } from '@vueuse/core'
 import ElectricityBeam from '@/components/ElectricityBeam.vue'
 import MyCarousel from '@/components/MyCarousel.vue'
+
 //~
 
 //! Reactivity
@@ -23,7 +24,6 @@ const el = ref(null)
 const widthValue = ref(isDesktop.value ? 679 : 180)
 const coloredDiv2 = ref<HTMLElement | null>(null)
 const darkStore = useDarkStore()
-
 //!
 
 //^ Handlers

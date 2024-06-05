@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 //~ Imports
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDark, useToggle } from '@vueuse/core'
 import { Icon } from '@iconify/vue'
@@ -30,8 +30,10 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { useCounterStore } from '@/stores/counter'
-import { useAuthStore } from '@/stores/auth'
+import { isAuthenticated } from '@/apis/auth.js'
 import { useDarkStore } from '@/stores/dark'
+//@ts-expect-error
+import { supabase } from '@/lib/supabaseClient'
 // Makros
 
 //
@@ -40,7 +42,7 @@ import { useDarkStore } from '@/stores/dark'
 //! Reactivity
 
 const counterStore = useCounterStore()
-const authStore = useAuthStore()
+
 const darkStore = useDarkStore()
 const sheetOpen = ref<undefined | boolean>(undefined)
 const router = useRouter()
@@ -53,9 +55,24 @@ const isDark = useDark({
   disableTransition: false
 })
 const toggleDark = useToggle(isDark)
+const isAuth = isAuthenticated()
 //!
 
 //^ Handlers
+const handleLogout = async () => {
+  try {
+    await supabase.auth.signOut()
+    counterStore.$reset()
+    localStorage.removeItem('loggedIn')
+    router.push({ name: 'home' })
+
+    // Sayfayı yenilemek için
+    window.location.reload()
+  } catch (error: any) {
+    console.error('Çıkış yapılırken bir hata oluştu:', error.message)
+  }
+}
+
 const handleSheet = () => {
   sheetOpen.value = false
   console.log('sheetOPen', sheetOpen.value)
@@ -64,16 +81,6 @@ const handleSheet = () => {
   }, 1000)
 }
 
-const handleLogout = () => {
-  counterStore.$reset()
-  router.push({
-    name: 'home'
-  })
-
-  setTimeout(() => {
-    authStore.handleAuth()
-  }, 100)
-}
 //^
 
 //& Routes
@@ -190,7 +197,7 @@ const handleLogout = () => {
           <span class="sr-only">Toggle theme</span>
         </Button>
 
-        <Button class="w-12" v-if="authStore.isLogged" as-child variant="secondary" size="sm">
+        <Button class="w-12" v-if="isAuth" as-child variant="secondary" size="sm">
           <RouterLink aria-label="Cart page" to="/cart" class="relative">
             <ShoppingCart />
             <Badge v-if="counterStore.cart.length > 0" class="absolute -top-2 -right-4">{{
@@ -214,7 +221,7 @@ const handleLogout = () => {
           <DropdownMenuContent class="w-40">
             <DropdownMenuLabel>Auth</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup v-if="!authStore.isLogged">
+            <DropdownMenuGroup v-if="!isAuth">
               <DropdownMenuItem as-child class="cursor-pointer">
                 <RouterLink :to="{ name: 'login' }">Login</RouterLink>
               </DropdownMenuItem>
@@ -222,7 +229,7 @@ const handleLogout = () => {
                 <RouterLink :to="{ name: 'register' }">Register</RouterLink>
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuGroup v-else-if="authStore.isLogged">
+            <DropdownMenuGroup v-else-if="isAuth">
               <DropdownMenuItem role="button" @click="handleLogout" class="cursor-pointer">
                 <LogOut class="mr-2 h-4 w-4" />
                 <span>Log out</span>

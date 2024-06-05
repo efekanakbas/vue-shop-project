@@ -1,9 +1,9 @@
 export const isAuthenticated = () => {
-  const isLogged = localStorage.getItem('auth')
-  //@ts-expect-error
+  const isLogged = localStorage.getItem('loggedIn')
+
   if (isLogged) {
     const booleanValue = JSON.parse(isLogged)
-    return booleanValue.isLogged
+    return booleanValue
   } else {
     false
   }

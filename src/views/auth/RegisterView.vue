@@ -75,9 +75,9 @@ const touchedConfirm = useIsFieldTouched('confirm')
           >Register for dive into productions</CardDescription
         >
       </CardHeader>
-      <CardContent class="p-0 rounded-t-sm h-[400px] lg:h-[681px]">
+      <CardContent class="p-0 rounded-t-sm h-[400px] lg:h-[673px]">
         <ScrollArea class="h-full shadow-none rounded-b-lg">
-          <form class="space-y-6 bg-orange-100 dark:bg-orange-950 p-7" @submit="onSubmit">
+          <form class="space-y-6 bg-orange-100 dark:bg-orange-950 p-7 pb-5" @submit="onSubmit">
             <FormField v-slot="{ componentField }" name="username">
               <FormItem v-auto-animate>
                 <FormLabel>Username</FormLabel>
