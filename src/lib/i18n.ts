@@ -15,7 +15,7 @@ export const i18n = createI18n({
   messages: {
     en: {
       navbar: {
-        first: 'Man',
+        first: 'Men',
         second: 'Women',
         third: 'Electronics',
         fourth: 'Jewelery',
@@ -72,7 +72,7 @@ export const i18n = createI18n({
           subheading: 'Electronics'
         },
         jewelery: {
-          heading: 'Mücevher',
+          heading: 'Jewelery',
           subheading: 'Jewelery'
         },
         tooltip: 'To Product Page'
