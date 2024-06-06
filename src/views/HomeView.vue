@@ -185,11 +185,11 @@ onUnmounted(() => {
           class="rounded-lg h-[330px] w-full flex-wrap bg-gradient-to-t from-sky-300 via-white dark:from-sky-700 dark:to-sky-950"
         />
 
-        <div class="flex space-x-3 w-[calc(100%-10px)]">
+        <div class="flex justify-between w-[calc(100%-9px)] space-x-2">
           <Skeleton
             v-for="(_, index) in Array(3).fill(0)"
             :key="index"
-            class="rounded-lg h-[71.98px] w-[71.98px] border bg-sky-700"
+            class="rounded-lg aspect-square w-full h-full border bg-sky-700"
           />
         </div>
       </div>
@@ -241,11 +241,11 @@ onUnmounted(() => {
           class="rounded-lg h-[330px] w-full flex-wrap bg-gradient-to-t from-yellow-300 via-white dark:from-yellow-700 dark:to-yellow-950"
         />
 
-        <div class="flex space-x-3 w-[calc(100%-10px)]">
+        <div class="flex justify-between w-[calc(100%-9px)] space-x-2">
           <Skeleton
             v-for="(_, index) in Array(3).fill(0)"
             :key="index"
-            class="rounded-lg h-[71.98px] w-[71.98px] border bg-yellow-300 dark:bg-yellow-700"
+            class="rounded-lg aspect-square w-full h-full border bg-yellow-700"
           />
         </div>
       </div>
@@ -323,7 +323,11 @@ onUnmounted(() => {
                     <Separator />
                     <CardFooter class="p-3 flex justify-center">
                       {{
-                        item.title.length > 15 ? item.title.substring(0, 15) + '...' : item.title
+                        item.title.length > 5
+                          ? isDesktop
+                            ? item.title.substring(0, 12)
+                            : item.title.substring(0, 5) + '...'
+                          : item.title
                       }}
                     </CardFooter>
                   </Card>
@@ -377,7 +381,11 @@ onUnmounted(() => {
                     <Separator />
                     <CardFooter :title="item.title" class="p-3 flex justify-center">
                       {{
-                        item.title.length > 15 ? item.title.substring(0, 15) + '...' : item.title
+                        item.title.length > 5
+                          ? isDesktop
+                            ? item.title.substring(0, 12)
+                            : item.title.substring(0, 5) + '...' + '...'
+                          : item.title
                       }}
                     </CardFooter>
                   </Card>

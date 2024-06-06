@@ -74,16 +74,16 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                   params: { id: item.id }
                 })
               "
-              class="group transition-transform duration-200 select-none flex flex-col flex-1 h-[330px]"
+              class="group transition-transform duration-200 select-none flex flex-col flex-1 h-[330px] justify-center items-center w-full"
               :class="
                 //@ts-expect-error
                 item.category === 'jewelery' ? 'dark:bg-yellow-950' : 'dark:bg-sky-950'
               "
             >
               <CardContent
-                class="aspect-square items-center justify-center p-8 transform transition-transform duration-200 group-hover:scale-105 flex flex-col basis-1/2"
+                class="aspect-square items-center justify-center p-8 transform transition-transform duration-200 group-hover:scale-105"
               >
-                <figure class="h-full">
+                <figure class="">
                   <img
                     :alt="
                       //@ts-expect-error
