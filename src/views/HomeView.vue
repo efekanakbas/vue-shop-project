@@ -321,7 +321,7 @@ onUnmounted(() => {
                       />
                     </CardContent>
                     <Separator />
-                    <CardFooter class="p-3 flex justify-center">
+                    <CardFooter :title="item.title" class="p-3 flex justify-center">
                       {{
                         item.title.length > 5
                           ? isDesktop
