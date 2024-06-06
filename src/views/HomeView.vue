@@ -325,7 +325,7 @@ onUnmounted(() => {
                       {{
                         item.title.length > 5
                           ? isDesktop
-                            ? item.title.substring(0, 12)
+                            ? item.title.substring(0, 10) + '...'
                             : item.title.substring(0, 5) + '...'
                           : item.title
                       }}
@@ -383,7 +383,7 @@ onUnmounted(() => {
                       {{
                         item.title.length > 5
                           ? isDesktop
-                            ? item.title.substring(0, 12)
+                            ? item.title.substring(0, 10) + '...'
                             : item.title.substring(0, 5) + '...' + '...'
                           : item.title
                       }}
