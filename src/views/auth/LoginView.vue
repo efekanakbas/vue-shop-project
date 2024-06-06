@@ -166,7 +166,7 @@ console.log('ROUTE', route.fullPath)
               type="button"
               @click="signInWithGoogle"
             >
-              <img src="@/assets/google-logo.svg" alt="Google logo" />
+              <img src="/google-logo.svg" alt="Google logo" />
             </button>
             <button
               class="bg-orange-200 w-[60px] h-[60px] lg:w-[120px] lg:h-[60px] flex justify-center items-center rounded-lg dark:bg-orange-900 transition-colors duration-300 hover:bg-orange-300 dark:hover:bg-orange-800"
@@ -178,7 +178,7 @@ console.log('ROUTE', route.fullPath)
                 }
               "
             >
-              <img src="@/assets/github-logo.svg" alt="github logo" />
+              <img src="/github-logo.svg" alt="github logo" />
             </button>
           </div>
           <Separator class="dark:bg-white mx-auto w-[calc(100%-56px)]" />

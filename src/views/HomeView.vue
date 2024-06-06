@@ -15,20 +15,6 @@ import { useDarkStore } from '@/stores/dark'
 import { useMediaQuery } from '@vueuse/core'
 import ElectricityBeam from '@/components/ElectricityBeam.vue'
 import MyCarousel from '@/components/MyCarousel.vue'
-import electronicsImage from '@/assets/electronics.svg'
-import jeweleryImage from '@/assets/jewelery.svg'
-
-import appleImage from '@/assets/apple.svg'
-import googleImage from '@/assets/google.svg'
-import sonyImage from '@/assets/sony.svg'
-import samsungImage from '@/assets/samsung.svg'
-import nvidiaImage from '@/assets/nvidia.svg'
-
-import jewelery1Image from '@/assets/jewelery-1.svg'
-import jewelery2Image from '@/assets/jewelery-2.svg'
-import jewelery3Image from '@/assets/jewelery-3.svg'
-import jewelery4Image from '@/assets/jewelery-4.svg'
-import jewelery5Image from '@/assets/jewelery-5.svg'
 
 //~
 
@@ -338,7 +324,7 @@ onUnmounted(() => {
         >
           <div class="grid grid-cols-2 w-full h-full">
             <div
-              :style="{ backgroundImage: `url(${electronicsImage})` }"
+              style="background-image: url('/electronics.svg')"
               class="bg-no-repeat bg-center my-12 flex"
             ></div>
             <div class="h-full space-y-4">
@@ -352,7 +338,7 @@ onUnmounted(() => {
                     :key="index"
                     style="background-size: 80%"
                     :style="{
-                      backgroundImage: `url(${index == 0 ? appleImage : index == 1 ? googleImage : index == 2 ? samsungImage : index == 3 ? sonyImage : nvidiaImage})`
+                      backgroundImage: `url(/${index === 0 ? 'apple' : index === 1 ? 'google' : index === 2 ? 'samsung' : index === 3 ? 'sony' : 'nvidia'}.svg)`
                     }"
                     class="aspect-square bg-sky-100 rounded-full w-[100px] h-[100px] bg-no-repeat bg-center"
                   ></li>
@@ -377,7 +363,7 @@ onUnmounted(() => {
         >
           <div class="grid grid-cols-2 w-full h-full">
             <div
-              :style="{ backgroundImage: `url(${jeweleryImage})` }"
+              style="background-image: url('/jewelery.svg')"
               class="bg-no-repeat bg-center my-12 flex"
             ></div>
             <div class="h-full space-y-4">
@@ -391,7 +377,7 @@ onUnmounted(() => {
                     :key="index"
                     style="background-size: 80%"
                     :style="{
-                      backgroundImage: `url(${index == 0 ? jewelery1Image : index == 1 ? jewelery2Image : index == 2 ? jewelery3Image : index == 3 ? jewelery4Image : jewelery5Image})`
+                      backgroundImage: `url(/jewelery-${index + 1}.svg)`
                     }"
                     class="aspect-square bg-yellow-100 rounded-full w-[100px] h-[100px] bg-no-repeat bg-center"
                   ></li>
