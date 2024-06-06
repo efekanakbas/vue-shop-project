@@ -17,6 +17,7 @@ import { useDark } from '@vueuse/core'
 
 const props = defineProps<{
   data: object
+  condition: boolean
 }>()
 
 const emblaMainApi = ref<CarouselApi>()
@@ -55,7 +56,7 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
       class="relative w-[calc(100vw-135px)] lg:w-full flex h-full"
       @init-api="(val) => (emblaMainApi = val)"
     >
-      <CarouselContent class="flex h-full py-5 -ml-5">
+      <CarouselContent class="flex h-full -ml-5" :class="condition ? 'py-5 ' : ''">
         <CarouselItem
           class="active:cursor-grabbing hover:cursor-grab lg:basis-[31.6%] flex h-full pl-5"
           v-for="item in data"
@@ -73,7 +74,11 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                   params: { id: item.id }
                 })
               "
-              class="group transition-transform duration-200 select-none dark:bg-slate-900 flex flex-col h-full flex-1"
+              class="group transition-transform duration-200 select-none flex flex-col flex-1 h-[330px]"
+              :class="
+                //@ts-expect-error
+                item.category === 'jewelery' ? 'dark:bg-yellow-950' : 'dark:bg-sky-950'
+              "
             >
               <CardContent
                 class="aspect-square items-center justify-center p-8 transform transition-transform duration-200 group-hover:scale-105 flex flex-col basis-1/2"
@@ -84,7 +89,7 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                       //@ts-expect-error
                       item.title
                     "
-                    class="object-contain w-full h-[100px]"
+                    class="object-contain w-full h-[120px]"
                     :src="
                       //@ts-expect-error
                       item.image
@@ -101,13 +106,17 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                 class="p-3 flex justify-evenly basis-1/2 bg-gradient-to-t w-full rounded-lg flex-col items-start"
                 :class="
                   //@ts-expect-error
-                  item.category === 'jewelery' ? 'from-yellow-300' : 'from-sky-300'
+                  item.category === 'jewelery'
+                    ? 'from-yellow-300 dark:from-yellow-700'
+                    : 'from-sky-300 dark:from-sky-700'
                 "
               >
                 <h1
                   :class="
                     //@ts-expect-error
-                    item.category === 'jewelery' ? 'text-yellow-800' : 'text-sky-800'
+                    item.category === 'jewelery'
+                      ? 'text-yellow-800 dark:text-yellow-300'
+                      : 'text-sky-800 dark:text-sky-300'
                   "
                 >
                   {{
@@ -137,7 +146,9 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                   class="text-[24px] font-bold"
                   :class="
                     //@ts-expect-error
-                    item.category === 'jewelery' ? 'text-yellow-800' : 'text-sky-800'
+                    item.category === 'jewelery'
+                      ? 'text-yellow-800 dark:text-yellow-300'
+                      : 'text-sky-800 dark:text-sky-300'
                   "
                 >
                   ${{
@@ -157,7 +168,7 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
     <Carousel
       v-if="!isDesktop"
       :drag-free="true"
-      class="relative max-w-xs w-[calc(100vw-135px)] mx-auto"
+      class="relative max-w-xs w-[calc(100vw-135px)] mx-auto mt-[6px]"
       @init-api="(val) => (emblaThumbnailApi = val)"
     >
       <CarouselContent class="flex gap-1 ml-0">
@@ -169,7 +180,15 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
         >
           <div class="p-1" :class="index === selectedIndex ? '' : 'opacity-50'">
             <Card>
-              <CardContent class="flex aspect-square items-center justify-center p-0 h-full w-full">
+              <CardContent
+                class="flex aspect-square items-center justify-center p-0 h-full w-full rounded-lg"
+                :class="
+                  //@ts-expect-error
+                  item.category === 'jewelery'
+                    ? ' dark:bg-yellow-700 bg-yellow-300'
+                    : ' dark:bg-sky-700 bg-sky-300'
+                "
+              >
                 <figure class="flex justify-center w-12 h-12">
                   <img
                     class="object-contain"

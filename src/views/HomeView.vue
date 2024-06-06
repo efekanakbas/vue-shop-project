@@ -126,8 +126,10 @@ onUnmounted(() => {
 <template>
   <template v-if="menError || womenError || jeweleryError || electronicsError"> ERROR! </template>
   <template v-else-if="menLoading || womenLoading || jeweleryLoading || electronicsLoading">
-    <div class="h-full w-full space-y-7 flex flex-col items-center justify-start pb-3">
-      <Skeleton class="rounded-lg w-[140px] h-[40px]" />
+    <div class="h-full w-full space-y-7 flex flex-col items-center justify-start pb-2 lg:pb-0">
+      <Skeleton
+        class="rounded-lg w-[140px] h-[40px] bg-gradient-to-r from-blue-100 to-pink-100 dark:from-blue-950 dark:to-pink-950"
+      />
       <div class="w-full h-full flex">
         <Skeleton
           class="rounded-lg mx-auto w-[calc(50vw-20px)] lg:w-full h-[500px] rounded-r-none bg-blue-100 dark:bg-blue-950"
@@ -138,26 +140,114 @@ onUnmounted(() => {
       </div>
 
       <Skeleton
-        class="rounded-lg w-[324px] h-[66px] bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-500"
+        class="rounded-lg w-[324px] h-[62px] bg-gradient-to-r from-sky-300 via-sky-100 to-sky-300 dark:from-sky-900 dark:via-sky-700 dark:to-sky-900"
       />
       <div
-        class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-6 justify-center items-center basis-3"
+        v-if="isDesktop"
+        class="flex flex-col h-[500px] bg-gradient-to-t from-sky-500 to-sky-100 dark:from-sky-950 dark:to-sky-700 rounded-lg"
       >
-        <Skeleton
-          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(1).fill(0)"
-          :key="index"
-          class="rounded-lg h-[260px] lg:h-[482.66px] w-full flex-wrap"
-        />
+        <div class="grid grid-cols-2 w-full h-full">
+          <div
+            style="background-image: url('/electronics.svg')"
+            class="bg-no-repeat bg-center my-12 flex"
+          ></div>
+          <div class="h-full space-y-[34px] mt-[18px]">
+            <ul class="flex space-x-5 mt-[2px]">
+              <Skeleton
+                v-for="(_, index) in Array(3).fill(0)"
+                :key="index"
+                class="w-[221.19px] h-[330px] rounded-lg border"
+              ></Skeleton>
+            </ul>
+            <div class="">
+              <ul class="flex justify-center items-center h-full space-x-4">
+                <li
+                  v-for="(item, index) in Array(5).fill(0)"
+                  :key="index"
+                  style="background-size: 80%"
+                  :style="{
+                    backgroundImage: `url(/${index === 0 ? 'apple' : index === 1 ? 'google' : index === 2 ? 'samsung' : index === 3 ? 'sony' : 'nvidia'}.svg)`
+                  }"
+                  class="aspect-square bg-sky-100 dark:bg-sky-700 rounded-full w-[80px] h-[80px] bg-no-repeat bg-center"
+                ></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
-      <Skeleton class="rounded-lg w-[140px] h-[40px] bg-yellow-400 translate-y-1" />
       <div
-        class="flex flex-col w-[calc(100vw-135px)] lg:w-[calc(100vw-568px)] lg:flex-row gap-6 justify-center items-center basis-3 translate-y-2"
+        v-else-if="!isDesktop"
+        class="flex flex-col w-[calc(100vw-135px)] gap-[10px] justify-center items-center basis-3"
       >
         <Skeleton
-          v-for="(item, index) in isDesktop ? Array(3).fill(0) : Array(1).fill(0)"
+          v-for="(_, index) in Array(1).fill(0)"
           :key="index"
-          class="rounded-lg h-[260px] lg:h-[482.66px] w-full flex-wrap"
+          class="rounded-lg h-[330px] w-full flex-wrap bg-gradient-to-t from-sky-300 via-white dark:from-sky-700 dark:to-sky-950"
         />
+
+        <div class="flex space-x-3 w-[calc(100%-10px)]">
+          <Skeleton
+            v-for="(_, index) in Array(3).fill(0)"
+            :key="index"
+            class="rounded-lg h-[71.98px] w-[71.98px] border bg-sky-700"
+          />
+        </div>
+      </div>
+      <Skeleton
+        class="rounded-lg w-[140px] h-[40px] bg-yellow-100 dark:bg-yellow-950 translate-y-1 lg:translate-y-0"
+      />
+
+      <div
+        v-if="isDesktop"
+        class="flex flex-col h-[500px] bg-gradient-to-t from-yellow-600 to-yellow-100 dark:from-yellow-950 dark:to-yellow-700 rounded-lg"
+      >
+        <div class="grid grid-cols-2 w-full h-full">
+          <div
+            style="background-image: url('/jewelery.svg')"
+            class="bg-no-repeat bg-center my-12 flex"
+          ></div>
+          <div class="h-full space-y-9 mt-[18px]">
+            <ul class="flex space-x-5 mt-[2px]">
+              <Skeleton
+                v-for="(_, index) in Array(3).fill(0)"
+                :key="index"
+                class="w-[221.19px] h-[330px] rounded-lg border"
+              ></Skeleton>
+            </ul>
+            <div class="">
+              <ul class="flex justify-center items-center h-full space-x-4">
+                <li
+                  v-for="(item, index) in Array(5).fill(0)"
+                  :key="index"
+                  style="background-size: 80%"
+                  :style="{
+                    backgroundImage: `url(/jewelery-${index + 1}.svg)`
+                  }"
+                  class="aspect-square bg-yellow-100 dark:bg-yellow-700 rounded-full w-[80px] h-[80px] bg-no-repeat bg-center"
+                ></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-else-if="!isDesktop"
+        class="flex flex-col w-[calc(100vw-135px)] gap-[10px] justify-center items-center basis-3 translate-y-1"
+      >
+        <Skeleton
+          v-for="(_, index) in Array(1).fill(0)"
+          :key="index"
+          class="rounded-lg h-[330px] w-full flex-wrap bg-gradient-to-t from-yellow-300 via-white dark:from-yellow-700 dark:to-yellow-950"
+        />
+
+        <div class="flex space-x-3 w-[calc(100%-10px)]">
+          <Skeleton
+            v-for="(_, index) in Array(3).fill(0)"
+            :key="index"
+            class="rounded-lg h-[71.98px] w-[71.98px] border bg-yellow-300 dark:bg-yellow-700"
+          />
+        </div>
       </div>
     </div>
   </template>
@@ -166,7 +256,7 @@ onUnmounted(() => {
       <section class="space-y-7">
         <div class="flex justify-center">
           <h1
-            class="text-[20px] bg-white dark:text-white w-[140px] h-[40px] flex justify-center items-center rounded-lg dark:bg-slate-900"
+            class="text-[20px] bg-gradient-to-r from-blue-100 to-pink-100 dark:text-white w-[140px] h-[40px] flex justify-center items-center rounded-lg dark:from-blue-950 dark:to-pink-950"
           >
             {{ $t('homePage.first.heading') }}
           </h1>
@@ -320,19 +410,19 @@ onUnmounted(() => {
         </div>
         <div
           v-if="isDesktop"
-          class="flex flex-col h-[500px] bg-gradient-to-t from-sky-500 to-sky-100 rounded-lg"
+          class="flex flex-col h-[500px] bg-gradient-to-t from-sky-500 to-sky-100 dark:from-sky-950 dark:to-sky-700 rounded-lg"
         >
           <div class="grid grid-cols-2 w-full h-full">
             <div
               style="background-image: url('/electronics.svg')"
               class="bg-no-repeat bg-center my-12 flex"
             ></div>
-            <div class="h-full space-y-4">
+            <div class="h-full space-y-[14px]">
               <div class="">
-                <MyCarousel :data="electronicsData" />
+                <MyCarousel :condition="true" :data="electronicsData" />
               </div>
               <div class="">
-                <ul class="flex justify-center items-center h-full space-x-5">
+                <ul class="flex justify-center items-center h-full space-x-4">
                   <li
                     v-for="(item, index) in Array(5).fill(0)"
                     :key="index"
@@ -340,14 +430,14 @@ onUnmounted(() => {
                     :style="{
                       backgroundImage: `url(/${index === 0 ? 'apple' : index === 1 ? 'google' : index === 2 ? 'samsung' : index === 3 ? 'sony' : 'nvidia'}.svg)`
                     }"
-                    class="aspect-square bg-sky-100 rounded-full w-[100px] h-[100px] bg-no-repeat bg-center"
+                    class="aspect-square bg-sky-100 dark:bg-sky-700 rounded-full w-[80px] h-[80px] bg-no-repeat bg-center"
                   ></li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <MyCarousel v-else-if="!isDesktop" :data="electronicsData" />
+        <MyCarousel :condition="false" v-else-if="!isDesktop" :data="electronicsData" />
       </section>
       <section class="space-y-7">
         <div class="flex justify-center">
@@ -359,19 +449,19 @@ onUnmounted(() => {
         </div>
         <div
           v-if="isDesktop"
-          class="flex flex-col h-[500px] bg-gradient-to-t from-yellow-600 to-yellow-100 rounded-lg"
+          class="flex flex-col h-[500px] bg-gradient-to-t from-yellow-600 to-yellow-100 dark:from-yellow-950 dark:to-yellow-700 rounded-lg"
         >
           <div class="grid grid-cols-2 w-full h-full">
             <div
               style="background-image: url('/jewelery.svg')"
               class="bg-no-repeat bg-center my-12 flex"
             ></div>
-            <div class="h-full space-y-4">
+            <div class="h-full space-y-[14px]">
               <div class="">
-                <MyCarousel :data="jeweleryData" />
+                <MyCarousel :condition="true" :data="jeweleryData" />
               </div>
               <div class="">
-                <ul class="space-x-5 translate-y-[2px] flex justify-center">
+                <ul class="space-x-4 translate-y-[2px] flex justify-center items-center">
                   <li
                     v-for="(item, index) in Array(5).fill(0)"
                     :key="index"
@@ -379,14 +469,14 @@ onUnmounted(() => {
                     :style="{
                       backgroundImage: `url(/jewelery-${index + 1}.svg)`
                     }"
-                    class="aspect-square bg-yellow-100 rounded-full w-[100px] h-[100px] bg-no-repeat bg-center"
+                    class="aspect-square bg-yellow-100 rounded-full w-[80px] h-[80px] bg-no-repeat bg-center dark:bg-yellow-700"
                   ></li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <MyCarousel v-else-if="!isDesktop" :data="jeweleryData" />
+        <MyCarousel :condition="false" v-else-if="!isDesktop" :data="jeweleryData" />
       </section>
     </div>
   </template>
