@@ -11,8 +11,11 @@ import {
 } from '@/components/ui/carousel'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { useMediaQuery } from '@vueuse/core'
+//@ts-expect-error
+import StarRating from 'vue-star-rating'
+import { useDark } from '@vueuse/core'
 
-defineProps<{
+const props = defineProps<{
   data: object
 }>()
 
@@ -20,6 +23,7 @@ const emblaMainApi = ref<CarouselApi>()
 const emblaThumbnailApi = ref<CarouselApi>()
 const selectedIndex = ref(0)
 const isDesktop = useMediaQuery('(min-width: 1024px)')
+const isDark = useDark()
 
 function onSelect() {
   if (!emblaMainApi.value || !emblaThumbnailApi.value) return
@@ -42,22 +46,25 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
 </script>
 
 <template>
-  <div class="w-full sm:w-auto">
+  <div class="w-full sm:w-auto lg-flex h-full flex flex-col justify-center items-center">
     <Carousel
+      :opts="{
+        align: 'start'
+      }"
       :drag-free="isDesktop ? true : false"
-      class="relative w-[calc(100vw-135px)] lg:w-full mx-auto"
+      class="relative w-[calc(100vw-135px)] lg:w-full flex h-full"
       @init-api="(val) => (emblaMainApi = val)"
     >
-      <CarouselContent>
+      <CarouselContent class="flex h-full py-5 -ml-5">
         <CarouselItem
-          class="active:cursor-grabbing hover:cursor-grab lg:basis-1/3"
+          class="active:cursor-grabbing hover:cursor-grab lg:basis-[31.6%] flex h-full pl-5"
           v-for="item in data"
           :key="
             //@ts-expect-error
             item.id
           "
         >
-          <div class="p-1">
+          <div class="flex flex-1">
             <Card
               @click="
                 $router.push({
@@ -66,22 +73,24 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                   params: { id: item.id }
                 })
               "
-              class="group transition-transform duration-200 select-none dark:bg-slate-900"
+              class="group transition-transform duration-200 select-none dark:bg-slate-900 flex flex-col h-full flex-1"
             >
               <CardContent
-                class="flex aspect-square items-center justify-center p-8 transform transition-transform duration-200 group-hover:scale-105"
+                class="aspect-square items-center justify-center p-8 transform transition-transform duration-200 group-hover:scale-105 flex flex-col basis-1/2"
               >
-                <img
-                  :alt="
-                    //@ts-expect-error
-                    item.title
-                  "
-                  class="object-contain w-full h-full"
-                  :src="
-                    //@ts-expect-error
-                    item.image
-                  "
-                />
+                <figure class="h-full">
+                  <img
+                    :alt="
+                      //@ts-expect-error
+                      item.title
+                    "
+                    class="object-contain w-full h-[100px]"
+                    :src="
+                      //@ts-expect-error
+                      item.image
+                    "
+                  />
+                </figure>
               </CardContent>
 
               <CardFooter
@@ -89,12 +98,53 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
                   //@ts-expect-error
                   item.title
                 "
-                class="p-3 flex justify-center"
-              >
-                {{
+                class="p-3 flex justify-evenly basis-1/2 bg-gradient-to-t w-full rounded-lg flex-col items-start"
+                :class="
                   //@ts-expect-error
-                  item.title.length > 20 ? item.title.substring(0, 20) + '...' : item.title
-                }}
+                  item.category === 'jewelery' ? 'from-yellow-300' : 'from-sky-300'
+                "
+              >
+                <h1
+                  :class="
+                    //@ts-expect-error
+                    item.category === 'jewelery' ? 'text-yellow-800' : 'text-sky-800'
+                  "
+                >
+                  {{
+                    //@ts-expect-error
+                    item.title.length > 17 ? item.title.substring(0, 17) + '...' : item.title
+                  }}
+                </h1>
+
+                <StarRating
+                  :glow="!isDark ? 3 : 0"
+                  glow-color="#ffd055"
+                  :star-size="10"
+                  :rounded-corners="true"
+                  :border-width="4"
+                  :star-points="[
+                    23, 2, 14, 17, 0, 19, 10, 34, 7, 50, 23, 43, 38, 50, 36, 34, 46, 19, 31, 17
+                  ]"
+                  :read-only="true"
+                  :rating="`${
+                    //@ts-expect-error
+                    item.rating.rate
+                  }`"
+                  class="custom-text"
+                  :increment="0.01"
+                ></StarRating>
+                <p
+                  class="text-[24px] font-bold"
+                  :class="
+                    //@ts-expect-error
+                    item.category === 'jewelery' ? 'text-yellow-800' : 'text-sky-800'
+                  "
+                >
+                  ${{
+                    //@ts-expect-error
+                    item.price
+                  }}
+                </p>
               </CardFooter>
             </Card>
           </div>

@@ -15,6 +15,20 @@ import { useDarkStore } from '@/stores/dark'
 import { useMediaQuery } from '@vueuse/core'
 import ElectricityBeam from '@/components/ElectricityBeam.vue'
 import MyCarousel from '@/components/MyCarousel.vue'
+import electronicsImage from '@/assets/electronics.svg'
+import jeweleryImage from '@/assets/jewelery.svg'
+
+import appleImage from '@/assets/apple.svg'
+import googleImage from '@/assets/google.svg'
+import sonyImage from '@/assets/sony.svg'
+import samsungImage from '@/assets/samsung.svg'
+import nvidiaImage from '@/assets/nvidia.svg'
+
+import jewelery1Image from '@/assets/jewelery-1.svg'
+import jewelery2Image from '@/assets/jewelery-2.svg'
+import jewelery3Image from '@/assets/jewelery-3.svg'
+import jewelery4Image from '@/assets/jewelery-4.svg'
+import jewelery5Image from '@/assets/jewelery-5.svg'
 
 //~
 
@@ -304,31 +318,89 @@ onUnmounted(() => {
             class="absolute inset-0 w-full h-full z-0 mx-[50%] -translate-x-[50%] flex justify-center"
           >
             <div class="w-full h-full flex justify-center items-center">
-              <Separator orientation="vertical" class="h-14 bg-blue-900 dark:bg-white" />
+              <Separator orientation="vertical" class="h-14 bg-sky-700 dark:bg-white" />
               <ElectricityBeam
-                class="bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-500 dark:from-indigo-900 dark:via-indigo-700 dark:to-indigo-900"
+                class="bg-gradient-to-r from-sky-300 via-sky-100 to-sky-300 dark:from-sky-900 dark:via-sky-700 dark:to-sky-900"
               />
-              <Separator orientation="vertical" class="h-14 bg-blue-900 dark:bg-white" />
+              <Separator orientation="vertical" class="h-14 bg-sky-700 dark:bg-white" />
             </div>
           </span>
           <h1
-            class="overflow-hidden text-blue-900 dark:text-white opacity-80 p-4 z-10 text-[20px] font-bold"
+            class="overflow-hidden text-sky-700 dark:text-white opacity-80 p-4 z-10 text-[20px] font-bold"
           >
             {{ $t('homePage.second.title') }}
             <div class="sparkles absolute inset-0 z-10"></div>
           </h1>
         </div>
-        <MyCarousel :data="electronicsData" />
+        <div
+          v-if="isDesktop"
+          class="flex flex-col h-[500px] bg-gradient-to-t from-sky-500 to-sky-100 rounded-lg"
+        >
+          <div class="grid grid-cols-2 w-full h-full">
+            <div
+              :style="{ backgroundImage: `url(${electronicsImage})` }"
+              class="bg-no-repeat bg-center my-12 flex"
+            ></div>
+            <div class="h-full space-y-4">
+              <div class="">
+                <MyCarousel :data="electronicsData" />
+              </div>
+              <div class="">
+                <ul class="flex justify-center items-center h-full space-x-5">
+                  <li
+                    v-for="(item, index) in Array(5).fill(0)"
+                    :key="index"
+                    style="background-size: 80%"
+                    :style="{
+                      backgroundImage: `url(${index == 0 ? appleImage : index == 1 ? googleImage : index == 2 ? samsungImage : index == 3 ? sonyImage : nvidiaImage})`
+                    }"
+                    class="aspect-square bg-sky-100 rounded-full w-[100px] h-[100px] bg-no-repeat bg-center"
+                  ></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <MyCarousel v-else-if="!isDesktop" :data="electronicsData" />
       </section>
       <section class="space-y-7">
         <div class="flex justify-center">
           <h1
-            class="text-[20px] w-[140px] h-[40px] flex justify-center items-center rounded-lg text-yellow-950 bg-yellow-400 dark:bg-yellow-950 dark:text-yellow-400"
+            class="text-[20px] w-[140px] h-[40px] flex justify-center items-center rounded-lg text-yellow-950 bg-yellow-100 dark:bg-yellow-950 dark:text-yellow-100"
           >
             {{ $t('homePage.third.title') }}
           </h1>
         </div>
-        <MyCarousel :data="jeweleryData" />
+        <div
+          v-if="isDesktop"
+          class="flex flex-col h-[500px] bg-gradient-to-t from-yellow-600 to-yellow-100 rounded-lg"
+        >
+          <div class="grid grid-cols-2 w-full h-full">
+            <div
+              :style="{ backgroundImage: `url(${jeweleryImage})` }"
+              class="bg-no-repeat bg-center my-12 flex"
+            ></div>
+            <div class="h-full space-y-4">
+              <div class="">
+                <MyCarousel :data="jeweleryData" />
+              </div>
+              <div class="">
+                <ul class="space-x-5 translate-y-[2px] flex justify-center">
+                  <li
+                    v-for="(item, index) in Array(5).fill(0)"
+                    :key="index"
+                    style="background-size: 80%"
+                    :style="{
+                      backgroundImage: `url(${index == 0 ? jewelery1Image : index == 1 ? jewelery2Image : index == 2 ? jewelery3Image : index == 3 ? jewelery4Image : jewelery5Image})`
+                    }"
+                    class="aspect-square bg-yellow-100 rounded-full w-[100px] h-[100px] bg-no-repeat bg-center"
+                  ></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <MyCarousel v-else-if="!isDesktop" :data="jeweleryData" />
       </section>
     </div>
   </template>

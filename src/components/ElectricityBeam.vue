@@ -77,13 +77,13 @@ svg {
   height: 100px;
 }
 path {
-  stroke: #00ffff;
+  stroke: #0077ff;
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
 }
 #glow feDropShadow {
-  flood-color: #b7daff;
+  flood-color: #b7d6ff;
 }
 html,
 body {
