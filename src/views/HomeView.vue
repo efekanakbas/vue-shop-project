@@ -256,7 +256,7 @@ onUnmounted(() => {
       <section class="space-y-7">
         <div class="flex justify-center">
           <h1
-            class="text-[20px] bg-gradient-to-r from-blue-100 to-pink-100 dark:text-white w-[140px] h-[40px] flex justify-center items-center rounded-lg dark:from-blue-950 dark:to-pink-950"
+            class="text-[20px] bg-gradient-to-r from-blue-100 to-pink-100 dark:text-white w-[140px] h-[40px] flex justify-center items-center rounded-lg dark:from-blue-950 dark:to-pink-950 font-bold text-gray-500"
           >
             {{ $t('homePage.first.heading') }}
           </h1>
@@ -450,7 +450,7 @@ onUnmounted(() => {
       <section class="space-y-7">
         <div class="flex justify-center">
           <h1
-            class="text-[20px] w-[140px] h-[40px] flex justify-center items-center rounded-lg text-yellow-950 bg-yellow-100 dark:bg-yellow-950 dark:text-yellow-100"
+            class="text-[20px] w-[140px] h-[40px] flex justify-center items-center rounded-lg text-yellow-950 bg-yellow-100 dark:bg-yellow-950 dark:text-yellow-100 font-bold"
           >
             {{ $t('homePage.third.title') }}
           </h1>
