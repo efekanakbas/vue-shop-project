@@ -129,8 +129,6 @@ const router = createRouter({
   ]
 })
 
-export default router
-
 router.beforeEach((to) => {
   // if (!isAuthenticated() && !authRoutes.includes(to.fullPath)) {
   //   return { name: 'login' }
@@ -142,3 +140,5 @@ router.beforeEach((to) => {
     return
   }
 })
+
+export default router
