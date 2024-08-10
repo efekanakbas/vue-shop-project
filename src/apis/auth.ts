@@ -5,6 +5,6 @@ export const isAuthenticated = () => {
     const booleanValue = JSON.parse(isLogged)
     return booleanValue
   } else {
-    false
+    return false
   }
 }
